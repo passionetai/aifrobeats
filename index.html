@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aifrobeats - Music for Your Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --accent-color: #4CAF50;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e9ecef;
+            --container-bg: rgba(26, 26, 26, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --accent-color: #66BB6A;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+            padding-top: 100px;
+        }
+
+        .container {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+        }
+
+        h1, p {
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 2.5rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+
+        .hero-subhead {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .value-proposition {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .business-focus {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .form-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0, 0, 0.2, 1);
+            margin: 20px 0;
+        }
+
+        .form-step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] input::placeholder, [data-theme="dark"] textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:hover, textarea:hover, select:hover {
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        input:focus, textarea:focus {
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        select {
+            max-height: 100px;
+            overflow-y: auto;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%234CAF50" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+        }
+
+        #themeToggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            background: var(--container-bg);
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"] {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .form-description {
+            font-size: 0.9em;
+            color: rgba(0, 0, 0, 0.7);
+            margin-top: 5px;
+            transition: color 0.3s ease;
+        }
+
+        [data-theme="dark"] .form-description {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <h1>Empower Your Story Through Music 🌍</h1>
+        <p class="hero-subhead">From Heartfelt Moments to Brand Anthems - We Amplify African Voices</p>
+
+        <div class="value-proposition">
+            <p>🎉 <strong>4 Free Songs Monthly</strong> - For Everyone<br>
+            <span style="font-size:0.9em">(Business owners, creators, and celebration-makers welcome!)</span></p>
+            
+            <div class="business-focus">
+                <p>🔥 <strong>Business Owners:</strong> Make your<br>
+                <span style="color:var(--accent-color)">Social Media • Ads • Brand Jingles<br>
+                Unforgettable with Custom Afrobeats</span></p>
+            </div>
+        </div>
+
+        <form id="songForm" onsubmit="submitToGoogleSheet(event)">
+            <!-- Updated Form Header -->
+            <h2 style="font-size:1.6rem;margin-bottom:25px">🎵 What Story Should We Tell?</h2>
+            
+            <!-- Step 1: Name -->
+            <div class="form-step active">
+                <input type="text" placeholder="Your Name or Business Name" required>
+            </div>
+            
+            <!-- Step 2: Email -->
+            <div class="form-step">
+                <input type="email" id="emailInput" placeholder="Your Email" required>
+            </div>
+
+            <!-- Step 3: WhatsApp -->
+            <div class="form-step">
+                <input type="tel" id="whatsappInput" placeholder="Your WhatsApp Number" required>
+                <p class="form-description">If you want your song to be delivered to your WhatsApp, please enter the number above.</p>
+            </div>
+
+            <!-- Step 4: Telegram -->
+            <div class="form-step">
+                <input type="tel" id="telegramInput" placeholder="Your Telegram Number" required>
+                <p class="form-description">If you want your song to be delivered to your Telegram, please enter the number above.</p>
+            </div>
+
+            <!-- Step 5: Purpose of Song -->
+            <div class="form-step">
+                <select id="songPurpose" required>
+                    <option value="">Purpose of Song...</option>
+                    <option value="not_listed">NOT LISTED</option>
+                    <option value="jingle_business">Jingle for My Business</option>
+                    <option value="wedding_bride">Wedding day song for the bride</option>
+                    <option value="graduation_child">Graduation song for a son or daughter</option>
+                    <option value="baby_steps">First steps song for a baby</option>
+                    <option value="anniversary_couple">Anniversary song for a couple</option>
+                    <option value="birthday_friend">Birthday song for a best friend</option>
+                    <option value="retirement_colleague">Retirement song for a colleague</option>
+                    <option value="engagement_couple">Engagement song for a newly engaged couple</option>
+                    <option value="pregnancy_announcement">Pregnancy announcement song for expecting parents</option>
+                    <option value="first_date">First date song for a new couple</option>
+                    <option value="farewell_friend">Farewell song for a friend moving away</option>
+                    <option value="reunion_friends">Reunion song for long-lost friends</option>
+                    <option value="wedding_proposal">Wedding proposal song</option>
+                    <option value="first_home">First home purchase song</option>
+                    <option value="new_job">New job celebration song</option>
+                    <option value="recovery_illness">Recovery song for someone overcoming an illness</option>
+                    <option value="memorial_loved_one">Memorial song for a loved one who has passed away</option>
+                    <option value="coming_of_age">Coming of age song for a teenager</option>
+                    <option value="graduation_high_school">Graduation from high school song</option>
+                    <option value="graduation_graduate_school">Graduation from graduate school song</option>
+                    <option value="first_car">First car purchase song</option>
+                    <option value="first_paycheck">First paycheck song</option>
+                    <option value="promotion_employee">Promotion song for a hardworking employee</option>
+                    <option value="child_first_day_school">Song for a child's first day of school</option>
+                    <option value="child_first_tooth">Song for a child's first lost tooth</option>
+                    <option value="pet_birthday">Song for a pet's birthday</option>
+                    <option value="team_victory">Song for a team's victory celebration</option>
+                    <option value="millionaire_birthday">Song for a millionaire's birthday</option>
+                    <option value="billionaire_birthday">Song for a billionaire's birthday</option>
+                    <option value="company_founding">Song for a company's founding anniversary</option>
+                    <option value="company_product_launch">Song for a company's successful product launch</option>
+                    <option value="nonprofit_fundraising">Song for a non-profit's fundraising event</option>
+                    <option value="community_festival">Song for a community's festival or fair</option>
+                    <option value="city_centennial">Song for a city's centennial celebration</option>
+                    <option value="nation_independence">Song for a nation's independence day</option>
+                    <option value="soldier_homecoming">Song for a soldier's homecoming</option>
+                    <option value="nurse_appreciation">Song for a nurse's appreciation day</option>
+                    <option value="teacher_retirement">Song for a teacher's retirement</option>
+                    <option value="police_service">Song for a police officer's service</option>
+                    <option value="writer_book_launch">Song for a writer's book launch</option>
+                    <option value="musician_album">Song for a musician's album release</option>
+                    <option value="chef_restaurant">Song for a chef's restaurant opening</option>
+                    <option value="entrepreneur_startup">Song for an entrepreneur's successful startup</option>
+                    <option value="survivor_triumph">Song for a survivor's triumph over adversity</option>
+                    <option value="traveler_journey">Song for a traveler's journey to a new country</option>
+                    <option value="addict_sobriety">Song for a recovering addict's sobriety milestone</option>
+                    <option value="activist_campaign">Song for an activist's successful campaign</option>
+                    <option value="mentor_guidance">Song for a mentor's guidance and wisdom</option>
+                    <option value="philanthropist_donation">Song for a philanthropist's generous donation</option>
+                    <option value="coach_motivation">Song for a coach's motivation and inspiration</option>
+                    <option value="athlete_teamwork">Song for an athlete's sportsmanship and teamwork</option>
+                    <option value="fan_loyalty">Song for a fan's loyalty and enthusiasm</option>
+                    <option value="student_achievement">Song for a student's academic achievement</option>
+                    <option value="breakup_recovery">Music for Recovering from a Breakup</option>
+                    <option value="mindfulness_children">Mindfulness Music for Children</option>
+                </select>
+            </div>
+
+            <!-- Step 6: Other Song Type -->
+            <div class="form-step" id="otherSongStep">
+                <input type="text" id="otherSongType" placeholder="Other Song Type">
+                <p class="form-description">Fill your Song Type here if selected "NOT LISTED" above.</p>
+            </div>
+
+            <!-- Step 7: Describe Your Song Idea(s) -->
+            <div class="form-step" id="describeStep">
+                <textarea id="songDescription" placeholder="Describe Your Song Idea(s)*" required></textarea>
+                <p class="form-description">Explain what your song should be about, and the target name or names involved in the song. Describe your song idea in robust means can help us create and guide your personalized music in great details. We will write the lyrics based on the information you provide.</p>
+            </div>
+
+            <!-- Enhanced Submit Button -->
+            <button type="submit">
+                🚀 Create My Free Song + Business Pack
+            </button>
+        </form>
+
+        <!-- Trust Note -->
+        <p style="font-size:0.9em;text-align:center;margin-top:30px">
+            Every track is personally curated by our music experts from 100+ AI variations.<br>
+            <em>"We don't just make songs - we craft legacies."</em>
+        </p>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="themeToggle">🌙</button>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        document.body.setAttribute('data-theme', 'light');
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Form Animation Logic
+        const form = document.getElementById('songForm');
+        const emailInput = document.getElementById('emailInput');
+        const whatsappInput = document.getElementById('whatsappInput');
+        const telegramInput = document.getElementById('telegramInput');
+        const songPurpose = document.getElementById('songPurpose');
+        const otherSongStep = document.getElementById('otherSongStep');
+        const otherSongType = document.getElementById('otherSongType');
+        const describeStep = document.getElementById('describeStep');
+        const songDescription = document.getElementById('songDescription');
+
+        function validateAndProceed(currentInput) {
+            const currentStep = currentInput.closest('.form-step');
+            const nextStep = currentStep.nextElementSibling;
+
+            if (currentInput === emailInput) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|co|io|me|biz)$/i;
+                if (emailRegex.test(currentInput.value) && nextStep) {
+                    nextStep.classList.add('active');
+                }
+            } else if (currentInput === whatsappInput || currentInput === telegramInput) {
+                const numericRegex = /^\d*$/;
+                const value = currentInput.value;
+                if (numericRegex.test(value) && value.length >= 10 && nextStep) {
+                    nextStep.classList.add('active');
+                }
+                currentInput.value = value.replace(/\D/g, '');
+            } else if (currentInput.checkValidity() && nextStep && currentInput !== songPurpose && currentInput !== otherSongType && currentInput !== songDescription) {
+                nextStep.classList.add('active');
+            }
+        }
+
+        songPurpose.addEventListener('change', () => {
+            if (songPurpose.value === 'not_listed') {
+                otherSongStep.classList.add('active');
+                otherSongType.setAttribute('required', '');
+            } else {
+                otherSongStep.classList.remove('active');
+                otherSongType.removeAttribute('required');
+                describeStep.classList.add('active');
+            }
+        });
+
+        otherSongType.addEventListener('input', () => {
+            if (otherSongType.checkValidity()) {
+                describeStep.classList.add('active');
+            }
+        });
+
+        songDescription.addEventListener('input', () => {
+            if (songDescription.checkValidity()) {
+                // No captcha step to activate anymore
+            }
+        });
+
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', () => validateAndProceed(input));
+        });
+
+        // Updated Form Submission Handler with Google Sheets Integration (No reCAPTCHA)
+        async function submitToGoogleSheet(event) {
+            event.preventDefault();
+            
+            const formData = {
+                name: form.querySelector('input[type="text"]').value,
+                email: emailInput.value,
+                whatsapp: whatsappInput.value,
+                telegram: telegramInput.value,
+                songPurpose: songPurpose.value,
+                otherSongType: songPurpose.value === 'not_listed' ? otherSongType.value : '',
+                songDescription: songDescription.value
+            };
+            
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwL1xFkkEMBKsvWcIZMbOut3u0FwuIomeLJa6T1TXJ4xH2SrkRUoNUYIaK4jVDdUYtQ/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.result === 'success') {
+                    alert('Song request submitted successfully!');
+                    form.reset();
+                    document.querySelectorAll('.form-step').forEach(step => 
+                        step.classList.remove('active'));
+                    document.querySelector('.form-step:first-child').classList.add('active');
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>
