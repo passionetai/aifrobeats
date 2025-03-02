@@ -227,7 +227,7 @@
             
             <!-- Step 1: Name -->
             <div class="form-step active">
-                <input type="text" placeholder="Your Name or Business Name" required>
+                <input type="text" id="nameInput" placeholder="Your Name or Business Name" required>
             </div>
             
             <!-- Step 2: Email -->
@@ -339,13 +339,13 @@
     <button id="themeToggle">🌙</button>
 
     <script>
-        // Your Firebase Configuration
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA8znRoKlW7MfqCz1OlXfmR4zQObMq-I1I",
             authDomain: "aifrobeats-form.firebaseapp.com",
             databaseURL: "https://aifrobeats-form-default-rtdb.firebaseio.com",
             projectId: "aifrobeats-form",
-            storageBucket: "aifrobeats-form.firebasestorage.app",  // Note: Fixed typo from your config ("firebasestorage.app" instead of "appspot.com")
+            storageBucket: "aifrobeats-form.appspot.com",
             messagingSenderId: "547674264342",
             appId: "1:547674264342:web:d13124b5111dc2a99ab637"
         };
@@ -367,6 +367,7 @@
 
         // Form Animation Logic
         const form = document.getElementById('songForm');
+        const nameInput = document.getElementById('nameInput'); // Added ID for first field
         const emailInput = document.getElementById('emailInput');
         const whatsappInput = document.getElementById('whatsappInput');
         const telegramInput = document.getElementById('telegramInput');
@@ -380,50 +381,67 @@
             const currentStep = currentInput.closest('.form-step');
             const nextStep = currentStep.nextElementSibling;
 
+            // Simplified validation: proceed if input is valid and there's a next step
+            if (currentInput.checkValidity() && nextStep) {
+                nextStep.classList.add('active');
+            }
+
+            // Specific validations
             if (currentInput === emailInput) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|co|io|me|biz)$/i;
-                if (emailRegex.test(currentInput.value) && nextStep) {
-                    nextStep.classList.add('active');
+                if (!emailRegex.test(currentInput.value)) {
+                    currentInput.setCustomValidity('Please enter a valid email address.');
+                } else {
+                    currentInput.setCustomValidity('');
+                    if (nextStep) nextStep.classList.add('active');
                 }
             } else if (currentInput === whatsappInput || currentInput === telegramInput) {
                 const numericRegex = /^\d*$/;
                 const value = currentInput.value;
-                if (numericRegex.test(value) && value.length >= 10 && nextStep) {
-                    nextStep.classList.add('active');
+                if (!numericRegex.test(value) || value.length < 10) {
+                    currentInput.setCustomValidity('Please enter a valid 10+ digit phone number.');
+                } else {
+                    currentInput.setCustomValidity('');
+                    currentInput.value = value.replace(/\D/g, '');
+                    if (nextStep) nextStep.classList.add('active');
                 }
-                currentInput.value = value.replace(/\D/g, '');
-            } else if (currentInput.checkValidity() && nextStep && currentInput !== songPurpose && currentInput !== otherSongType && currentInput !== songDescription) {
-                nextStep.classList.add('active');
             }
         }
 
-        songPurpose.addEventListener('change', () => {
-            if (songPurpose.value === 'not_listed') {
-                otherSongStep.classList.add('active');
-                otherSongType.setAttribute('required', '');
-            } else {
-                otherSongStep.classList.remove('active');
-                otherSongType.removeAttribute('required');
-                describeStep.classList.add('active');
+        // Event listeners for step progression
+        [nameInput, emailInput, whatsappInput, telegramInput, songPurpose, otherSongType, songDescription].forEach(input => {
+            if (input) { // Ensure element exists
+                input.addEventListener('input', () => {
+                    validateAndProceed(input);
+                });
             }
         });
 
-        otherSongType.addEventListener('input', () => {
-            if (otherSongType.checkValidity()) {
-                describeStep.classList.add('active');
-            }
-        });
-
-        document.querySelectorAll('input, textarea, select').forEach(input => {
-            input.addEventListener('input', () => validateAndProceed(input));
-        });
+        // Special handling for songPurpose dropdown
+        if (songPurpose) {
+            songPurpose.addEventListener('change', () => {
+                if (songPurpose.value === 'not_listed') {
+                    otherSongStep.classList.add('active');
+                    otherSongType.setAttribute('required', '');
+                } else {
+                    otherSongStep.classList.remove('active');
+                    otherSongType.removeAttribute('required');
+                    describeStep.classList.add('active');
+                }
+            });
+        }
 
         // Firebase Submission Logic
         function submitToFirebase(event) {
             event.preventDefault();
 
+            if (!form.checkValidity()) {
+                alert('Please fill out all required fields correctly.');
+                return;
+            }
+
             const formData = {
-                name: form.querySelector('input[type="text"]').value,
+                name: nameInput.value,
                 email: emailInput.value,
                 whatsapp: whatsappInput.value,
                 telegram: telegramInput.value,
