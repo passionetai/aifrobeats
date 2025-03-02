@@ -218,35 +218,35 @@
             </div>
         </div>
 
-        <form id="songForm" onsubmit="submitToGoogleSheet(event)">
+        <form id="songForm" action="https://usebasin.com/f/db3f97e1d13d" method="POST">
             <!-- Updated Form Header -->
             <h2 style="font-size:1.6rem;margin-bottom:25px">🎵 What Story Should We Tell?</h2>
             
             <!-- Step 1: Name -->
             <div class="form-step active">
-                <input type="text" placeholder="Your Name or Business Name" required>
+                <input type="text" name="name" placeholder="Your Name or Business Name" required>
             </div>
             
             <!-- Step 2: Email -->
             <div class="form-step">
-                <input type="email" id="emailInput" placeholder="Your Email" required>
+                <input type="email" id="emailInput" name="email" placeholder="Your Email" required>
             </div>
 
             <!-- Step 3: WhatsApp -->
             <div class="form-step">
-                <input type="tel" id="whatsappInput" placeholder="Your WhatsApp Number" required>
+                <input type="tel" id="whatsappInput" name="whatsapp" placeholder="Your WhatsApp Number" required>
                 <p class="form-description">If you want your song to be delivered to your WhatsApp, please enter the number above.</p>
             </div>
 
             <!-- Step 4: Telegram -->
             <div class="form-step">
-                <input type="tel" id="telegramInput" placeholder="Your Telegram Number" required>
+                <input type="tel" id="telegramInput" name="telegram" placeholder="Your Telegram Number" required>
                 <p class="form-description">If you want your song to be delivered to your Telegram, please enter the number above.</p>
             </div>
 
             <!-- Step 5: Purpose of Song -->
             <div class="form-step">
-                <select id="songPurpose" required>
+                <select id="songPurpose" name="songPurpose" required>
                     <option value="">Purpose of Song...</option>
                     <option value="not_listed">NOT LISTED</option>
                     <option value="jingle_business">Jingle for My Business</option>
@@ -309,13 +309,13 @@
 
             <!-- Step 6: Other Song Type -->
             <div class="form-step" id="otherSongStep">
-                <input type="text" id="otherSongType" placeholder="Other Song Type">
+                <input type="text" id="otherSongType" name="otherSongType" placeholder="Other Song Type">
                 <p class="form-description">Fill your Song Type here if selected "NOT LISTED" above.</p>
             </div>
 
             <!-- Step 7: Describe Your Song Idea(s) -->
             <div class="form-step" id="describeStep">
-                <textarea id="songDescription" placeholder="Describe Your Song Idea(s)*" required></textarea>
+                <textarea id="songDescription" name="songDescription" placeholder="Describe Your Song Idea(s)*" required></textarea>
                 <p class="form-description">Explain what your song should be about, and the target name or names involved in the song. Describe your song idea in robust means can help us create and guide your personalized music in great details. We will write the lyrics based on the information you provide.</p>
             </div>
 
@@ -398,7 +398,7 @@
 
         songDescription.addEventListener('input', () => {
             if (songDescription.checkValidity()) {
-                // No captcha step to activate anymore
+                // No further steps to activate
             }
         });
 
@@ -406,45 +406,17 @@
             input.addEventListener('input', () => validateAndProceed(input));
         });
 
-        // Updated Form Submission Handler with Google Sheets Integration (No reCAPTCHA)
-        async function submitToGoogleSheet(event) {
-            event.preventDefault();
-            
-            const formData = {
-                name: form.querySelector('input[type="text"]').value,
-                email: emailInput.value,
-                whatsapp: whatsappInput.value,
-                telegram: telegramInput.value,
-                songPurpose: songPurpose.value,
-                otherSongType: songPurpose.value === 'not_listed' ? otherSongType.value : '',
-                songDescription: songDescription.value
-            };
-            
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwL1xFkkEMBKsvWcIZMbOut3u0FwuIomeLJa6T1TXJ4xH2SrkRUoNUYIaK4jVDdUYtQ/exec', {
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const result = await response.json();
-                
-                if (result.result === 'success') {
-                    alert('Song request submitted successfully!');
-                    form.reset();
-                    document.querySelectorAll('.form-step').forEach(step => 
-                        step.classList.remove('active'));
-                    document.querySelector('.form-step:first-child').classList.add('active');
-                } else {
-                    throw new Error(result.error);
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('Error submitting form. Please try again.');
-            }
-        }
+        // Optional: Handle form submission feedback (Basin doesn't require fetch)
+        form.addEventListener('submit', (event) => {
+            // You can still keep some client-side feedback if desired
+            setTimeout(() => {
+                alert('Song request submitted successfully!');
+                form.reset();
+                document.querySelectorAll('.form-step').forEach(step => 
+                    step.classList.remove('active'));
+                document.querySelector('.form-step:first-child').classList.add('active');
+            }, 500); // Delay to allow submission to Basin
+        });
     </script>
 </body>
 </html>
