@@ -339,131 +339,126 @@
     <button id="themeToggle">🌙</button>
 
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyA8znRoKlW7MfqCz1OlXfmR4zQObMq-I1I",
-            authDomain: "aifrobeats-form.firebaseapp.com",
-            databaseURL: "https://aifrobeats-form-default-rtdb.firebaseio.com",
-            projectId: "aifrobeats-form",
-            storageBucket: "aifrobeats-form.appspot.com",
-            messagingSenderId: "547674264342",
-            appId: "1:547674264342:web:d13124b5111dc2a99ab637"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        document.body.setAttribute('data-theme', 'light');
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-        });
-
-        // Form Animation Logic
-        const form = document.getElementById('songForm');
-        const nameInput = document.getElementById('nameInput'); // Added ID for first field
-        const emailInput = document.getElementById('emailInput');
-        const whatsappInput = document.getElementById('whatsappInput');
-        const telegramInput = document.getElementById('telegramInput');
-        const songPurpose = document.getElementById('songPurpose');
-        const otherSongStep = document.getElementById('otherSongStep');
-        const otherSongType = document.getElementById('otherSongType');
-        const describeStep = document.getElementById('describeStep');
-        const songDescription = document.getElementById('songDescription');
-
-        function validateAndProceed(currentInput) {
-            const currentStep = currentInput.closest('.form-step');
-            const nextStep = currentStep.nextElementSibling;
-
-            // Simplified validation: proceed if input is valid and there's a next step
-            if (currentInput.checkValidity() && nextStep) {
-                nextStep.classList.add('active');
-            }
-
-            // Specific validations
-            if (currentInput === emailInput) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|co|io|me|biz)$/i;
-                if (!emailRegex.test(currentInput.value)) {
-                    currentInput.setCustomValidity('Please enter a valid email address.');
-                } else {
-                    currentInput.setCustomValidity('');
-                    if (nextStep) nextStep.classList.add('active');
-                }
-            } else if (currentInput === whatsappInput || currentInput === telegramInput) {
-                const numericRegex = /^\d*$/;
-                const value = currentInput.value;
-                if (!numericRegex.test(value) || value.length < 10) {
-                    currentInput.setCustomValidity('Please enter a valid 10+ digit phone number.');
-                } else {
-                    currentInput.setCustomValidity('');
-                    currentInput.value = value.replace(/\D/g, '');
-                    if (nextStep) nextStep.classList.add('active');
-                }
-            }
-        }
-
-        // Event listeners for step progression
-        [nameInput, emailInput, whatsappInput, telegramInput, songPurpose, otherSongType, songDescription].forEach(input => {
-            if (input) { // Ensure element exists
-                input.addEventListener('input', () => {
-                    validateAndProceed(input);
-                });
-            }
-        });
-
-        // Special handling for songPurpose dropdown
-        if (songPurpose) {
-            songPurpose.addEventListener('change', () => {
-                if (songPurpose.value === 'not_listed') {
-                    otherSongStep.classList.add('active');
-                    otherSongType.setAttribute('required', '');
-                } else {
-                    otherSongStep.classList.remove('active');
-                    otherSongType.removeAttribute('required');
-                    describeStep.classList.add('active');
-                }
-            });
-        }
-
-        // Firebase Submission Logic
-        function submitToFirebase(event) {
-            event.preventDefault();
-
-            if (!form.checkValidity()) {
-                alert('Please fill out all required fields correctly.');
-                return;
-            }
-
-            const formData = {
-                name: nameInput.value,
-                email: emailInput.value,
-                whatsapp: whatsappInput.value,
-                telegram: telegramInput.value,
-                songPurpose: songPurpose.value,
-                otherSongType: songPurpose.value === 'not_listed' ? otherSongType.value : '',
-                songDescription: songDescription.value,
-                timestamp: new Date().toISOString()
+        document.addEventListener('DOMContentLoaded', () => {
+            // Firebase Configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyA8znRoKlW7MfqCz1OlXfmR4zQObMq-I1I",
+                authDomain: "aifrobeats-form.firebaseapp.com",
+                databaseURL: "https://aifrobeats-form-default-rtdb.firebaseio.com",
+                projectId: "aifrobeats-form",
+                storageBucket: "aifrobeats-form.appspot.com",
+                messagingSenderId: "547674264342",
+                appId: "1:547674264342:web:d13124b5111dc2a99ab637"
             };
 
-            database.ref('submissions').push(formData)
-                .then(() => {
-                    alert('Song request submitted successfully!');
-                    form.reset();
-                    document.querySelectorAll('.form-step').forEach(step => 
-                        step.classList.remove('active'));
-                    document.querySelector('.form-step:first-child').classList.add('active');
-                })
-                .catch(error => {
-                    console.error('Submission error:', error);
-                    alert('Error submitting form. Please try again.');
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+            console.log('Firebase initialized');
+
+            // Dark Mode Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            });
+
+            // Form Animation Logic
+            const form = document.getElementById('songForm');
+            const nameInput = document.getElementById('nameInput');
+            const emailInput = document.getElementById('emailInput');
+            const whatsappInput = document.getElementById('whatsappInput');
+            const telegramInput = document.getElementById('telegramInput');
+            const songPurpose = document.getElementById('songPurpose');
+            const otherSongStep = document.getElementById('otherSongStep');
+            const otherSongType = document.getElementById('otherSongType');
+            const describeStep = document.getElementById('describeStep');
+            const songDescription = document.getElementById('songDescription');
+
+            // Debugging: Check if elements are found
+            console.log('Form elements:', { form, nameInput, emailInput, whatsappInput, telegramInput, songPurpose, otherSongType, songDescription });
+
+            function showNextStep(currentInput) {
+                const currentStep = currentInput.closest('.form-step');
+                const nextStep = currentStep.nextElementSibling;
+                console.log('Current input:', currentInput.id, 'Value:', currentInput.value, 'Current step:', currentStep, 'Next step:', nextStep);
+
+                if (currentInput.value.trim() && nextStep) {
+                    nextStep.classList.add('active');
+                    console.log(`Showing next step: ${nextStep.querySelector('input, select, textarea').id}`);
+                }
+            }
+
+            // Event listeners for all inputs
+            [nameInput, emailInput, whatsappInput, telegramInput, songPurpose, otherSongType, songDescription].forEach(input => {
+                if (input) {
+                    input.addEventListener('input', () => {
+                        showNextStep(input);
+                    });
+                    console.log(`Added listener to ${input.id}`);
+                } else {
+                    console.error(`Element not found: ${input}`);
+                }
+            });
+
+            // Special handling for songPurpose
+            if (songPurpose) {
+                songPurpose.addEventListener('change', () => {
+                    console.log('Song Purpose changed to:', songPurpose.value);
+                    if (songPurpose.value === 'not_listed') {
+                        otherSongStep.classList.add('active');
+                        otherSongType.setAttribute('required', '');
+                        console.log('Showing Other Song Type step');
+                    } else {
+                        otherSongStep.classList.remove('active');
+                        otherSongType.removeAttribute('required');
+                        describeStep.classList.add('active');
+                        console.log('Showing Song Description step');
+                    }
                 });
-        }
+            }
+
+            // Firebase Submission Logic
+            function submitToFirebase(event) {
+                event.preventDefault();
+
+                if (!form.checkValidity()) {
+                    alert('Please fill out all required fields.');
+                    console.log('Form invalid');
+                    return;
+                }
+
+                const formData = {
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    whatsapp: whatsappInput.value,
+                    telegram: telegramInput.value,
+                    songPurpose: songPurpose.value,
+                    otherSongType: songPurpose.value === 'not_listed' ? otherSongType.value : '',
+                    songDescription: songDescription.value,
+                    timestamp: new Date().toISOString()
+                };
+
+                console.log('Submitting to Firebase:', formData);
+
+                database.ref('submissions').push(formData)
+                    .then(() => {
+                        alert('Song request submitted successfully!');
+                        form.reset();
+                        document.querySelectorAll('.form-step').forEach(step => 
+                            step.classList.remove('active'));
+                        document.querySelector('.form-step:first-child').classList.add('active');
+                        console.log('Submission successful');
+                    })
+                    .catch(error => {
+                        console.error('Submission error:', error);
+                        alert('Error submitting form. Please try again.');
+                    });
+            }
+        });
     </script>
 </body>
 </html>
