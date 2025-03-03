@@ -218,7 +218,7 @@
             </div>
         </div>
 
-        <form id="songForm" onsubmit="submitForm(event)">
+        <form id="songForm" onsubmit="submitToAirtable(event)">
             <!-- Updated Form Header -->
             <h2 style="font-size:1.6rem;margin-bottom:25px">🎵 What Story Should We Tell?</h2>
             
@@ -409,27 +409,56 @@
                 });
             }
 
-            // Basic Form Submission (No Backend)
-            function submitForm(event) {
+            // Airtable Submission Logic with Your Details
+            async function submitToAirtable(event) {
                 event.preventDefault();
+
                 if (!form.checkValidity()) {
                     alert('Please fill out all required fields.');
                     console.log('Form invalid');
                     return;
                 }
-                console.log('Form submitted:', {
-                    name: nameInput.value,
-                    email: emailInput.value,
-                    whatsapp: whatsappInput.value,
-                    telegram: telegramInput.value,
-                    songPurpose: songPurpose.value,
-                    otherSongType: songPurpose.value === 'not_listed' ? otherSongType.value : '',
-                    songDescription: songDescription.value
-                });
-                alert('Form submitted successfully (no backend)!');
-                form.reset();
-                document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-                document.querySelector('.form-step:first-child').classList.add('active');
+
+                const formData = {
+                    "Name": nameInput.value,
+                    "Email": emailInput.value,
+                    "WhatsApp": whatsappInput.value,
+                    "Telegram": telegramInput.value,
+                    "Song Purpose": songPurpose.value,
+                    "Other Song Type": songPurpose.value === 'not_listed' ? otherSongType.value : '',
+                    "Song Description": songDescription.value
+                };
+
+                console.log('Submitting to Airtable:', formData);
+
+                try {
+                    const response = await fetch('https://api.airtable.com/v0/appmA3zl2IkLBt3gE/tbl0YiFZGwxS5p9ZF', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer patYWMT5pElZOCAzX.e1784a23026b1415a76817ce2e03cf8e25a7108d0d875a37d6550817d6dcde70',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            "records": [{
+                                "fields": formData
+                            }]
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert('Song request submitted successfully!');
+                        form.reset();
+                        document.querySelectorAll('.form-step').forEach(step => 
+                            step.classList.remove('active'));
+                        document.querySelector('.form-step:first-child').classList.add('active');
+                        console.log('Submission successful');
+                    } else {
+                        throw new Error('Failed to submit to Airtable: ' + response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    alert('Error submitting form. Please try again.');
+                }
             }
         });
     </script>
