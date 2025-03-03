@@ -337,6 +337,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded');
+
             // Dark Mode Toggle
             const themeToggle = document.getElementById('themeToggle');
             document.body.setAttribute('data-theme', 'light');
@@ -359,8 +361,7 @@
             const describeStep = document.getElementById('describeStep');
             const songDescription = document.getElementById('songDescription');
 
-            // Debugging logs
-            console.log('Form elements loaded:', {
+            console.log('Form elements:', {
                 form,
                 nameInput,
                 emailInput,
@@ -409,9 +410,10 @@
                 });
             }
 
-            // Airtable Submission Logic with Your Details
+            // Airtable Submission Logic
             async function submitToAirtable(event) {
-                event.preventDefault();
+                event.preventDefault(); // Prevent default form submission
+                console.log('Form submission intercepted');
 
                 if (!form.checkValidity()) {
                     alert('Please fill out all required fields.');
@@ -445,13 +447,15 @@
                         })
                     });
 
+                    console.log('Airtable response status:', response.status);
+
                     if (response.ok) {
+                        console.log('Submission successful');
                         alert('Song request submitted successfully!');
                         form.reset();
                         document.querySelectorAll('.form-step').forEach(step => 
                             step.classList.remove('active'));
                         document.querySelector('.form-step:first-child').classList.add('active');
-                        console.log('Submission successful');
                     } else {
                         throw new Error('Failed to submit to Airtable: ' + response.statusText);
                     }
