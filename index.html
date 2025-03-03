@@ -224,7 +224,7 @@
             
             <!-- Step 1: Name -->
             <div class="form-step active">
-                <input type="text" id="nameInput" placeholder="Your Name or Business Name" required>
+                <input type="text" placeholder="Your Name or Business Name" required>
             </div>
             
             <!-- Step 2: Email -->
@@ -336,135 +336,112 @@
     <button id="themeToggle">🌙</button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM fully loaded');
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        document.body.setAttribute('data-theme', 'light');
 
-            // Dark Mode Toggle
-            const themeToggle = document.getElementById('themeToggle');
-            document.body.setAttribute('data-theme', 'light');
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.body.setAttribute('data-theme', newTheme);
-                themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            });
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
 
-            // Form Animation Logic
-            const form = document.getElementById('songForm');
-            const nameInput = document.getElementById('nameInput');
-            const emailInput = document.getElementById('emailInput');
-            const whatsappInput = document.getElementById('whatsappInput');
-            const telegramInput = document.getElementById('telegramInput');
-            const songPurpose = document.getElementById('songPurpose');
-            const otherSongStep = document.getElementById('otherSongStep');
-            const otherSongType = document.getElementById('otherSongType');
-            const describeStep = document.getElementById('describeStep');
-            const songDescription = document.getElementById('songDescription');
+        // Form Animation Logic
+        const form = document.getElementById('songForm');
+        const emailInput = document.getElementById('emailInput');
+        const whatsappInput = document.getElementById('whatsappInput');
+        const telegramInput = document.getElementById('telegramInput');
+        const songPurpose = document.getElementById('songPurpose');
+        const otherSongStep = document.getElementById('otherSongStep');
+        const otherSongType = document.getElementById('otherSongType');
+        const describeStep = document.getElementById('describeStep');
+        const songDescription = document.getElementById('songDescription');
 
-            console.log('Form elements:', {
-                form,
-                nameInput,
-                emailInput,
-                whatsappInput,
-                telegramInput,
-                songPurpose,
-                otherSongType,
-                songDescription
-            });
+        function validateAndProceed(currentInput) {
+            const currentStep = currentInput.closest('.form-step');
+            const nextStep = currentStep.nextElementSibling;
 
-            function showNextStep(currentInput) {
-                const currentStep = currentInput.closest('.form-step');
-                const nextStep = currentStep.nextElementSibling;
-                console.log('Input event on:', currentInput.id, 'Value:', currentInput.value);
-
-                if (currentInput.value.trim() && nextStep) {
+            if (currentInput === emailInput) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|net|edu|gov|co|io|me|biz)$/i;
+                if (emailRegex.test(currentInput.value) && nextStep) {
                     nextStep.classList.add('active');
-                    console.log('Showing next step:', nextStep.querySelector('input, select, textarea')?.id);
                 }
+            } else if (currentInput === whatsappInput || currentInput === telegramInput) {
+                const numericRegex = /^\d*$/;
+                const value = currentInput.value;
+                if (numericRegex.test(value) && value.length >= 10 && nextStep) {
+                    nextStep.classList.add('active');
+                }
+                currentInput.value = value.replace(/\D/g, '');
+            } else if (currentInput.checkValidity() && nextStep && currentInput !== songPurpose && currentInput !== otherSongType && currentInput !== songDescription) {
+                nextStep.classList.add('active');
             }
+        }
 
-            // Event listeners for all inputs
-            [nameInput, emailInput, whatsappInput, telegramInput, songPurpose, otherSongType, songDescription].forEach(input => {
-                if (input) {
-                    input.addEventListener('input', () => showNextStep(input));
-                    console.log('Added input listener to:', input.id);
-                } else {
-                    console.error('Element not found:', input);
-                }
-            });
-
-            // Special handling for songPurpose
-            if (songPurpose) {
-                songPurpose.addEventListener('change', () => {
-                    console.log('Song Purpose changed to:', songPurpose.value);
-                    if (songPurpose.value === 'not_listed') {
-                        otherSongStep.classList.add('active');
-                        otherSongType.setAttribute('required', '');
-                        console.log('Showing Other Song Type step');
-                    } else {
-                        otherSongStep.classList.remove('active');
-                        otherSongType.removeAttribute('required');
-                        describeStep.classList.add('active');
-                        console.log('Showing Song Description step');
-                    }
-                });
-            }
-
-            // Airtable Submission Logic
-            async function submitToAirtable(event) {
-                event.preventDefault(); // Prevent default form submission
-                console.log('Form submission intercepted');
-
-                if (!form.checkValidity()) {
-                    alert('Please fill out all required fields.');
-                    console.log('Form invalid');
-                    return;
-                }
-
-                const formData = {
-                    "Name": nameInput.value,
-                    "Email": emailInput.value,
-                    "WhatsApp": whatsappInput.value,
-                    "Telegram": telegramInput.value,
-                    "Song Purpose": songPurpose.value,
-                    "Other Song Type": songPurpose.value === 'not_listed' ? otherSongType.value : '',
-                    "Song Description": songDescription.value
-                };
-
-                console.log('Submitting to Airtable:', formData);
-
-                try {
-                    const response = await fetch('https://api.airtable.com/v0/appmA3zl2IkLBt3gE/tbl0YiFZGwxS5p9ZF', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer patYWMT5pElZOCAzX.e1784a23026b1415a76817ce2e03cf8e25a7108d0d875a37d6550817d6dcde70',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            "records": [{
-                                "fields": formData
-                            }]
-                        })
-                    });
-
-                    console.log('Airtable response status:', response.status);
-
-                    if (response.ok) {
-                        console.log('Submission successful');
-                        alert('Song request submitted successfully!');
-                        form.reset();
-                        document.querySelectorAll('.form-step').forEach(step => 
-                            step.classList.remove('active'));
-                        document.querySelector('.form-step:first-child').classList.add('active');
-                    } else {
-                        throw new Error('Failed to submit to Airtable: ' + response.statusText);
-                    }
-                } catch (error) {
-                    console.error('Submission error:', error);
-                    alert('Error submitting form. Please try again.');
-                }
+        songPurpose.addEventListener('change', () => {
+            if (songPurpose.value === 'not_listed') {
+                otherSongStep.classList.add('active');
+                otherSongType.setAttribute('required', '');
+            } else {
+                otherSongStep.classList.remove('active');
+                otherSongType.removeAttribute('required');
+                describeStep.classList.add('active');
             }
         });
+
+        otherSongType.addEventListener('input', () => {
+            if (otherSongType.checkValidity()) {
+                describeStep.classList.add('active');
+            }
+        });
+
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', () => validateAndProceed(input));
+        });
+
+        // Airtable Submission Logic with Your Details
+        async function submitToAirtable(event) {
+            event.preventDefault();
+
+            const formData = {
+                "Name": form.querySelector('input[type="text"]').value,
+                "Email": emailInput.value,
+                "WhatsApp": whatsappInput.value,
+                "Telegram": telegramInput.value,
+                "Song Purpose": songPurpose.value,
+                "Other Song Type": songPurpose.value === 'not_listed' ? otherSongType.value : '',
+                "Song Description": songDescription.value
+            };
+
+            try {
+                const response = await fetch('https://api.airtable.com/v0/appmA3zl2IkLBt3gE/tbl0YiFZGwxS5p9ZF', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer patYWMT5pElZOCAzX.e1784a23026b1415a76817ce2e03cf8e25a7108d0d875a37d6550817d6dcde70',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "records": [{
+                            "fields": formData
+                        }]
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Song request submitted successfully!');
+                    form.reset();
+                    document.querySelectorAll('.form-step').forEach(step => 
+                        step.classList.remove('active'));
+                    document.querySelector('.form-step:first-child').classList.add('active');
+                } else {
+                    throw new Error('Failed to submit to Airtable: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error submitting form. Please try again.');
+            }
+        }
     </script>
 </body>
 </html>
