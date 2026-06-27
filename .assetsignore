@@ -1,0 +1,12 @@
+# Wrangler uploads everything in the assets directory (".") as static site
+# assets. These entries keep the deploy from uploading build tooling and
+# internal files. The critical one is node_modules: "npx wrangler deploy"
+# installs a 121 MiB workerd binary there, which exceeds the 25 MiB per-asset
+# limit and fails the whole production deploy.
+node_modules
+.git
+.wrangler
+*.md
+design-reference.png
+build.js
+package.json
