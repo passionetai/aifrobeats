@@ -1,16 +1,13 @@
 [
-  { "id": "drop-alert-don-enter", "title": "Alert Don Enter", "caption": "", "audio_file": "/music/drops/Alert Don Enter.mp3", "date": "2026-05-04", "social_link": "", "featured": true },
-  { "id": "drop-felicia", "title": "Felicia", "caption": "Mother's Day song — male vocal Afrobeats", "audio_file": "/music/drops/Felicia.mp3", "date": "2026-05-04", "social_link": "", "featured": true },
-  { "id": "drop-loretta", "title": "Loretta", "caption": "Mother's Day song — female vocal Afrobeats", "audio_file": "/music/drops/Loretta,.mp3", "date": "2026-05-04", "social_link": "", "featured": true },
-  { "id": "drop-delia", "title": "Delia", "caption": "Jingle hit for detergent business", "audio_file": "/music/Delia.mp3", "date": "2026-05-03", "social_link": "", "featured": true },
-  { "id": "drop-dreadlocks", "title": "Dreadlocks", "caption": "Commissioned song for a partner with dreadlocks hair", "audio_file": "/music/drops/Dreadlocks.mp3", "date": "2026-05-02", "social_link": "", "featured": true },
-  { "id": "drop-sarah", "title": "Sarah", "caption": "Commissioned love song for a partner", "audio_file": "/music/drops/Sarah.mp3", "date": "2026-05-01", "social_link": "", "featured": true },
-  { "id": "drop-dancefloor-confessions", "title": "Dancefloor Confessions", "caption": "", "audio_file": "/music/drops/Dancefloor Confessions.mp3", "date": "2026-04-30", "social_link": "", "featured": false },
-  { "id": "drop-do-it", "title": "DO IT", "caption": "", "audio_file": "/music/drops/DO IT.mp3", "date": "2026-04-29", "social_link": "", "featured": false },
-  { "id": "drop-happy-birthday-tolu", "title": "Happy Birthday Tolu", "caption": "", "audio_file": "/music/drops/Happy Birthday Tolu.mp3", "date": "2026-04-28", "social_link": "", "featured": false },
-  { "id": "drop-kingsman-cuts", "title": "Kingsman Cuts", "caption": "", "audio_file": "/music/drops/Kingsman Cuts.mp3", "date": "2026-04-27", "social_link": "", "featured": false },
-  { "id": "drop-milele-na-wele", "title": "Milele Na Wele", "caption": "", "audio_file": "/music/drops/Milele Na Wele.mp3", "date": "2026-04-26", "social_link": "", "featured": false },
-  { "id": "drop-terrorize-me", "title": "Terrorize Me", "caption": "", "audio_file": "/music/drops/Terrorize Me.mp3", "date": "2026-04-25", "social_link": "", "featured": false },
-  { "id": "drop-wedding-song-for-chidera", "title": "Wedding Song for Chidera", "caption": "", "audio_file": "/music/drops/Wedding Song for Chidera.mp3", "date": "2026-04-24", "social_link": "", "featured": false },
-  { "id": "drop-yemi", "title": "Yemi", "caption": "", "audio_file": "/music/drops/Yemi.mp3", "date": "2026-04-23", "social_link": "", "featured": false }
+  { "id": "drop-delia", "title": "Delia", "caption": "Jingle hit for detergent business", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/Delia.mp3", "date": "2026-05-03", "social_link": "", "featured": true },
+  { "id": "drop-dreadlocks", "title": "Dreadlocks", "caption": "Commissioned song for a partner with dreadlocks hair", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Dreadlocks.mp3", "date": "2026-05-02", "social_link": "", "featured": true },
+  { "id": "drop-sarah", "title": "Sarah", "caption": "Commissioned love song for a partner", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Sarah.mp3", "date": "2026-05-01", "social_link": "", "featured": true },
+  { "id": "drop-dancefloor-confessions", "title": "Dancefloor Confessions", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Dancefloor Confessions.mp3", "date": "2026-04-30", "social_link": "", "featured": false },
+  { "id": "drop-do-it", "title": "DO IT", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/DO IT.mp3", "date": "2026-04-29", "social_link": "", "featured": false },
+  { "id": "drop-happy-birthday-tolu", "title": "Happy Birthday Tolu", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Happy Birthday Tolu.mp3", "date": "2026-04-28", "social_link": "", "featured": false },
+  { "id": "drop-kingsman-cuts", "title": "Kingsman Cuts", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Kingsman Cuts.mp3", "date": "2026-04-27", "social_link": "", "featured": false },
+  { "id": "drop-milele-na-wele", "title": "Milele Na Wele", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Milele Na Wele.mp3", "date": "2026-04-26", "social_link": "", "featured": false },
+  { "id": "drop-terrorize-me", "title": "Terrorize Me", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Terrorize Me.mp3", "date": "2026-04-25", "social_link": "", "featured": false },
+  { "id": "drop-wedding-song-for-chidera", "title": "Wedding Song for Chidera", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Wedding Song for Chidera.mp3", "date": "2026-04-24", "social_link": "", "featured": false },
+  { "id": "drop-yemi", "title": "Yemi", "caption": "", "audio_file": "https://pub-8771ce6470a54274832f9cae71dc15c3.r2.dev/music/drops/Yemi (1).mp3", "date": "2026-04-23", "social_link": "", "featured": false }
 ]
