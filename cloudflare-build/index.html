@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aifrobeats | Afrobeats songs, made for the people you love.</title>
+  <meta name="description" content="Custom Afrobeats songs, made for the people you love. In hours, not weeks. Commission yours at aifrobeats.com.">
+  <meta property="og:title" content="Aifrobeats — Custom Afrobeats Songs">
+  <meta property="og:description" content="Afrobeats songs, made for the people you love. In hours, not weeks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aifrobeats.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5fdf447c3cba4ccd9f7b45aa0d13e518"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  
+  <!-- Critical inline CSS for hero -->
+  <style>
+    .hero-bg {
+      padding-top: 15vh;
+      padding-bottom: 10vh;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo-link" aria-label="Aifrobeats home">
+      <img src="/images/mlogo.png" alt="Aifrobeats Logo" class="site-logo">
+    </a>
+    <input type="checkbox" id="site-nav-toggle" class="site-nav-toggle" aria-label="Toggle navigation">
+    <label for="site-nav-toggle" class="site-nav-button" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="drops.html">Drops</a>
+      <a href="about.html">About</a>
+      <a href="licensing.html">Licensing</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Section 1 — Hero -->
+    <section class="hero-bg px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-hero font-display text-white mb-6 uppercase">
+          AFROBEATS SONGS.<br>
+          MADE FOR THE PEOPLE YOU LOVE.
+        </h1>
+        <p class="accent-secondary font-display tracking-wide uppercase text-lg mb-10">
+          IN HOURS — NOT WEEKS.
+        </p>
+        <a href="#packages" class="btn-orange-pill glow-orange">SEE PACKAGES</a>
+      </div>
+    </section>
+
+    <!-- Section 2 — Radio Player -->
+    <section class="px-4 pb-20">
+      <div class="audio-player-container flex flex-wrap items-center justify-between" data-aos="fade-up">
+        <div class="flex items-center gap-4">
+          <button id="radio-play-btn" class="play-btn play-btn-small glow-orange">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div>
+            <h2 id="radio-track-title" class="font-display text-white text-base">LOADING...</h2>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="live-indicator"></div>
+              <span class="accent-secondary font-display text-tiny tracking-wide uppercase">LIVE</span>
+            </div>
+          </div>
+        </div>
+        
+        <div id="radio-waveform" class="player-waveform hidden sm:flex">
+          <!-- JS fills this -->
+        </div>
+
+        <div class="flex items-center gap-4 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+          <span id="radio-time" class="text-muted text-small">00:00 / 00:00</span>
+          <div class="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <input type="range" id="radio-volume" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
+          </div>
+        </div>
+      </div>
+      <p class="text-center mt-6 text-muted font-display tracking-wide text-tiny uppercase">OUR STATION. ALWAYS ON.</p>
+    </section>
+
+    <!-- Section 3 — Packages -->
+    <section id="packages" class="px-4 py-20">
+      <h2 class="text-section font-display uppercase" data-aos="fade-up">FIVE WAYS TO MAKE A SONG.</h2>
+      
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Package 1 -->
+        <div class="pkg-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="category-lapel">LOVE/ROMANTIC SONGS</span>
+          <h3 class="font-display text-card-title text-white uppercase mb-2">FOR HER / FOR HIM</h3>
+          <p class="font-body italic text-secondary text-sm mb-6">The song she'll play when she misses you.</p>
+          <button class="pkg-play-btn play-btn glow-orange mb-5" data-audio="/music/samples/for-her-for-him.mp3">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <p class="font-display text-white tracking-wide text-sm mb-1 uppercase">$35 STANDARD · $55 RUSH (2HR)</p>
+          <p class="text-muted text-xs mb-4">Delivered same day</p>
+          <a href="https://aifrobeats.gumroad.com/l/for-her-for-him" class="accent-primary font-display tracking-wide text-tiny uppercase mt-auto flex items-center gap-1">SEE WHAT'S INCLUDED <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <!-- Package 2 -->
+        <div class="pkg-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="category-lapel">BIRTHDAY SONGS</span>
+          <h3 class="font-display text-card-title text-white uppercase mb-2">HAPPY BIRTHDAY</h3>
+          <p class="font-body italic text-secondary text-sm mb-6">A birthday song with their actual name in it.</p>
+          <button class="pkg-play-btn play-btn glow-orange mb-5" data-audio="/music/samples/happy-birthday.mp3">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <p class="font-display text-white tracking-wide text-sm mb-1 uppercase">$15 STANDARD · $25 RUSH (2HR)</p>
+          <p class="text-muted text-xs mb-4">Delivered in 2-3 hours</p>
+          <a href="https://aifrobeats.gumroad.com/l/happy-birthday" class="accent-primary font-display tracking-wide text-tiny uppercase mt-auto flex items-center gap-1">SEE WHAT'S INCLUDED <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <!-- Package 3 -->
+        <div class="pkg-card" data-aos="fade-up" data-aos-delay="300">
+          <span class="category-lapel">WEDDING SONGS</span>
+          <h3 class="font-display text-card-title text-white uppercase mb-2">WALK DOWN THE AISLE</h3>
+          <p class="font-body italic text-secondary text-sm mb-6">Afrobeats for the moment she walks in.</p>
+          <button class="pkg-play-btn play-btn glow-orange mb-5" data-audio="/music/samples/walk-down-the-aisle.mp3">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <p class="font-display text-white tracking-wide text-sm mb-1 uppercase">$80</p>
+          <p class="text-muted text-xs mb-4">Delivered in 3 days · Both vocal & instrumental versions</p>
+          <a href="https://aifrobeats.gumroad.com/l/walk-down-the-aisle" class="accent-primary font-display tracking-wide text-tiny uppercase mt-auto flex items-center gap-1">SEE WHAT'S INCLUDED <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <!-- Package 4 -->
+        <div class="pkg-card" data-aos="fade-up" data-aos-delay="400">
+          <span class="category-lapel">BUSINESS JINGLES</span>
+          <h3 class="font-display text-card-title text-white uppercase mb-2">BIG VIBES</h3>
+          <p class="font-body italic text-secondary text-sm mb-6">Your business, but it slaps.</p>
+          <button class="pkg-play-btn play-btn glow-orange mb-5" data-audio="/music/samples/big-vibes.mp3">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <p class="font-display text-white tracking-wide text-sm mb-1 uppercase">$40 SINGLE · $70 THREE-VERSION PACK</p>
+          <p class="text-muted text-xs mb-4">Delivered in 24 hours</p>
+          <a href="https://aifrobeats.gumroad.com/l/big-vibes" class="accent-primary font-display tracking-wide text-tiny uppercase mt-auto flex items-center gap-1">SEE WHAT'S INCLUDED <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+        </div>
+
+        <!-- Package 5 -->
+        <div class="pkg-card md:col-span-2" data-aos="fade-up" data-aos-delay="500">
+          <span class="category-lapel">CUSTOM / OTHER SONGS</span>
+          <h3 class="font-display text-card-title text-white uppercase mb-2">NOT SEEING YOUR CATEGORY?</h3>
+          <p class="font-body italic text-secondary text-sm mb-6">Send the story, the vibe, and who it's for — we'll tell you the best way to make it.</p>
+          <ul class="secondary-category-list text-secondary text-sm mb-6">
+            <li>Motivational songs</li>
+            <li>Holiday greetings</li>
+            <li>Sports chants</li>
+            <li>Apology songs</li>
+            <li>Graduation songs</li>
+            <li>Memorial tributes</li>
+          </ul>
+          <a href="https://wa.me/2348053717830?text=Hi%20Aifrobeats%2C%20I%20need%20a%20custom%20song%20that%20is%20not%20listed%20on%20the%20site." class="btn-orange-pill glow-orange uppercase text-sm mt-auto">DM US ON WHATSAPP →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 4 — Recent Drops -->
+    <section class="px-4 py-20">
+      <h2 class="text-section font-display uppercase" data-aos="fade-up">RECENT DROPS.</h2>
+      <div id="recent-drops-container" data-homepage="true" class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Injected via JS -->
+      </div>
+      <div class="text-center">
+        <a href="drops.html" class="accent-primary font-display tracking-wide text-small uppercase flex items-center justify-center gap-1">SEE ALL DROPS <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+      </div>
+    </section>
+
+    <!-- Section 5 — How it works -->
+    <section id="how-it-works" class="px-4 py-20">
+      <h2 class="text-section font-display uppercase" data-aos="fade-up">HOW IT WORKS.</h2>
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+        <div data-aos="fade-up" data-aos-delay="100">
+          <div class="font-display accent-primary text-4xl mb-4">1</div>
+          <h3 class="font-display text-white text-lg mb-2 uppercase">PICK A PACKAGE.</h3>
+          <p class="text-secondary">Choose the moment — love, birthday, wedding, brand.</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="200">
+          <div class="font-display accent-primary text-4xl mb-4">2</div>
+          <h3 class="font-display text-white text-lg mb-2 uppercase">TELL US WHO IT'S FOR.</h3>
+          <p class="text-secondary">A quick brief (2-5 minutes) after payment.</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <div class="font-display accent-primary text-4xl mb-4">3</div>
+          <h3 class="font-display text-white text-lg mb-2 uppercase">GET YOUR SONG.</h3>
+          <p class="text-secondary">Delivered to your WhatsApp, Telegram, or email within hours.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6 — FAQ -->
+    <section id="faq" class="px-4 py-20">
+      <h2 class="text-section font-display uppercase" data-aos="fade-up">FAQ.</h2>
+      <div class="max-w-3xl mx-auto border-t border-white/10" data-aos="fade-up">
+        
+        <div class="faq-item open">
+          <div class="faq-question">How fast is "in hours" actually? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">Fast. The clock starts the moment your order and brief arrive — not when we wake up, not when we "get to it." Whether you order at 10am or 10pm, we start within the hour.</p>
+            <p>One honest caveat: if you're ordering from a time zone 6-7+ hours away from Lagos (GMT) and your order comes in between 2am and 4am our time, there might be a slight delay — but we'll always confirm timing with you before you wait.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What if I don't like the song? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">We get it — sometimes the first version doesn't land the way you pictured it.</p>
+            <p class="mb-4">Every package includes up to <strong>2 revisions</strong>, delivered within 24 hours of your feedback. There are two kinds:</p>
+            <ul class="list-disc pl-5 mb-4">
+              <li class="mb-2"><strong>Tweak revision</strong> — we adjust lyrics, swap phrases, fix pronunciation, but keep the core song the same. The final version sounds like a cover of the first with your changes.</li>
+              <li><strong>Redo revision</strong> — a fresh take with a meaningfully different direction. Different vibe, different mood, different feel.</li>
+            </ul>
+            <p>Just tell us which kind you want when you send your feedback, and we'll deliver within 24 hours. A 3rd revision beyond the 2 included costs $10 across all packages.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Is this really AI-generated? Should I be worried about that? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">Yes and no. We use AI music tools as our instrument — the same way a producer uses a synthesizer or a DAW. But every song is human-directed: we write the lyrics, shape the vibe, pick the sound, and make the creative calls so the song feels like yours.</p>
+            <p class="mb-4">AI is how we deliver in hours what traditional studios take weeks to do. You're not getting a random AI output — you're getting a song a human made with AI as the tool, tuned for you.</p>
+            <p>The songs are fully commercially viable and yours to use anywhere.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">Can I release the song on Spotify, Apple Music, or other streaming platforms? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">Yes, absolutely. The song is yours with full commercial rights.</p>
+            <p>One thing to know: streaming platforms (Spotify, Apple Music, DistroKid, YouTube, etc.) have their own rules about disclosing AI-assisted music. Those rules change and vary by platform, so it's your responsibility to check and follow whatever the current policy is when you upload. A simple "AI-assisted" disclosure is usually all that's needed.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What happens if I pay but forget to fill out the brief? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">No stress — we follow up within 3 hours through WhatsApp and email to remind you and make sure you didn't get stuck.</p>
+            <p>If for some reason you never respond or change your mind entirely, we offer a refund since we can't deliver a song we don't have a brief for. Your money's never sitting in limbo.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Do I own the song after delivery? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">Yes, fully. Play it, post it, release it, use it commercially — it's yours.</p>
+            <p>One small thing: by default, we may feature your song as a sample on our site or socials (as part of our portfolio). <strong>If you want it kept completely private</strong> — like a surprise proposal song — just let us know and we'll keep it off everything. No questions asked.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">What format do the songs come in? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p class="mb-4">All songs are delivered as <strong>high-quality WAV files</strong> by default. If you'd prefer MP3, just let us know in the brief and we'll send that format instead.</p>
+            <p class="mb-4">For <strong>wedding songs</strong>, you get both the vocal version and an instrumental version, both in WAV, automatically.</p>
+            <p>For <strong>Big Vibes jingles</strong>, you can request an instrumental version at no extra charge — just mention it in the brief.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can I pay by bank transfer instead of online card? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>For Nigerian buyers who can't pay online, yes — reach out on WhatsApp (+234 805 371 7830) and we'll arrange a bank transfer. Everyone else pays through Gumroad (cards, PayPal).</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can you make songs in languages other than English? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>Yes. As long as the baseline is Afrobeats, we can do songs in Yoruba, Igbo, Hausa, French, or any other language. Just tell us what you want in the brief.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can I commission anonymously or outside your standard packages? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>Yes to both. If you want to commission anonymously (no credit, no reference to you), we'll respect that. And if your idea doesn't fit into our four packages — a diss track, a graduation song, a baby announcement, something we haven't thought of — reach out on WhatsApp and we'll work something out.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Do I get to hear a preview before final delivery? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>Yes. Before final delivery, we send you a 20-30 second preview (usually the first verse and chorus) so you can confirm it's going the right direction before we finalize. Saves revisions and makes sure you get exactly what you imagined.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">How many commissions can you handle at once? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>As many as you need. Whether you're commissioning one song or a batch (for an event, a campaign, or multiple people), we scale to fit. Just let us know in the brief if you're ordering multiple songs at once.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Can I hear more of your work before commissioning? <span class="faq-icon">+</span></div>
+          <div class="faq-answer">
+            <p>Our radio station on the homepage runs 24/7 — it plays our portfolio on loop. You can also browse recent drops and the music library for vocals and instrumentals. If you want to hear something specific before ordering (a certain vibe, a certain language, a certain mood), DM us on WhatsApp and we'll send samples.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="px-4 py-16 mt-10">
+    <div class="divider mb-16"></div>
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">EXPLORE</h4>
+        <ul class="flex flex-col gap-4 text-secondary text-sm">
+          <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="drops.html" class="hover:text-white transition-colors">Drops</a></li>
+          <li><a href="index.html#packages" class="hover:text-white transition-colors">Packages</a></li>
+          <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">How it works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">INFO</h4>
+        <ul class="flex flex-col gap-4 text-secondary text-sm">
+          <li><a href="index.html#faq" class="hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="index.html#faq" class="hover:text-white transition-colors">Delivery & revisions</a></li>
+          <li><a href="commission.html" class="hover:text-white transition-colors">Commission</a></li>
+          <li><a href="licensing.html" class="hover:text-white transition-colors">Licensing</a></li>
+          <li><a href="legal.html" class="hover:text-white transition-colors">Legal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">LET'S TALK</h4>
+        <p class="text-secondary text-sm mb-4">Chat with us on WhatsApp</p>
+        <a href="https://wa.me/2348053717830" class="flex items-center gap-2 text-white hover:text-accent-primary transition-colors mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          +234 805 371 7830
+        </a>
+        <div class="flex gap-4">
+          <a href="https://www.instagram.com/aifrobeats/" target="_blank" rel="noopener noreferrer" aria-label="Aifrobeats on Instagram" class="text-secondary hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="https://x.com/aifrobeats" target="_blank" rel="noopener noreferrer" aria-label="Aifrobeats on X" class="text-secondary hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L2.007 2.25H8.08l4.264 5.638 5.9-5.638Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="divider mb-8"></div>
+    <p class="text-center text-muted font-display tracking-wide text-xs uppercase">© 2026 AIFROBEATS. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/js/player.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

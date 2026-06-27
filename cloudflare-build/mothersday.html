@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aifrobeats | Free Mother's Day Song</title>
+  <meta name="description" content="Free Afrobeats song for your mom this Mother's Day. Delivered May 7th. First 40 requests only.">
+  <meta property="og:title" content="A Free Mother's Day Song for Your Mom">
+  <meta property="og:description" content="Tell us her name and a story. We'll make her a song. Delivered May 7th.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aifrobeats.com/mothersday.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5fdf447c3cba4ccd9f7b45aa0d13e518"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    .hero-bg {
+      padding-top: 15vh;
+      padding-bottom: 10vh;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo-link" aria-label="Aifrobeats home">
+      <img src="/images/mlogo.png" alt="Aifrobeats Logo" class="site-logo">
+    </a>
+    <input type="checkbox" id="site-nav-toggle" class="site-nav-toggle" aria-label="Toggle navigation">
+    <label for="site-nav-toggle" class="site-nav-button" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="mothersday.html" style="color: var(--accent-primary);">MOTHER'S DAY</a>
+      <a href="index.html">Home</a>
+      <a href="drops.html">Drops</a>
+      <a href="about.html">About</a>
+      <a href="licensing.html">Licensing</a>
+    </nav>
+  </header>
+
+  <!-- Mother's Day campaign state. Set data-campaign-state="closed" to switch the page into overflow mode. -->
+  <div id="mothersday-state" data-campaign-state="open" class="hidden"></div>
+
+  <main>
+
+    <!-- Section 1 — Hero -->
+    <section id="mothersday-hero" class="hero-bg px-4" data-aos="fade-up">
+      <div class="max-w-4xl mx-auto">
+        <p class="accent-secondary font-display tracking-wide uppercase text-sm mb-6">MOTHER'S DAY · MAY 7TH</p>
+        <h1 class="text-hero font-display text-white mb-6 uppercase">
+          A FREE AFROBEATS SONG.<br>
+          FOR THE WOMAN WHO RAISED YOU.
+        </h1>
+        <p class="text-secondary font-body italic mb-8 mx-auto" style="font-size:1.1rem; max-width:600px; line-height:1.6;">
+          Tell us her name and one thing she always says. We'll make her a song — yours to keep, hers to play forever. Free for the first 40 requests.
+        </p>
+        <div class="divider mb-6" style="max-width:480px; margin-left:auto; margin-right:auto; background-color:var(--accent-primary); opacity:0.4;"></div>
+        <p class="font-display tracking-wide uppercase text-sm" style="color: var(--accent-primary);">SUBMIT ON OR BY TUESDAY MAY 6TH · DELIVERED WEDNESDAY MAY 7TH</p>
+        <div class="divider mt-6" style="max-width:480px; margin-left:auto; margin-right:auto; background-color:var(--accent-primary); opacity:0.4;"></div>
+      </div>
+    </section>
+
+    <!-- Spot Counter -->
+    <section id="mothersday-spot-section" class="px-4 pb-10 text-center" data-aos="fade-up">
+      <div style="margin-top:32px;">
+        <div class="spot-counter" style="display:inline-flex;">
+          <span class="spot-dot"></span>
+          <span><strong id="spots-left">40</strong> FREE SONGS AVAILABLE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 — Audio Sample -->
+    <section id="mothersday-sample-section" class="px-4 pb-16" data-aos="fade-up">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-display text-white uppercase tracking-wide text-2xl mb-8 text-center">HEAR THE VIBE.</h2>
+        <div class="audio-player-container flex flex-wrap items-center justify-between">
+          <div class="flex items-center gap-4">
+            <button id="sample-play-btn" class="play-btn play-btn-small glow-orange">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <div>
+              <h2 class="font-display text-white text-base">FOR YOUR MOTHER (SAMPLE)</h2>
+            </div>
+          </div>
+          <div id="sample-waveform" class="player-waveform hidden sm:flex"></div>
+          <div class="flex items-center gap-4 mt-4 sm:mt-0 w-full sm:w-auto justify-end">
+            <span id="sample-time" class="text-muted text-small">00:00 / 00:00</span>
+          </div>
+        </div>
+        <p class="text-center mt-4 text-muted font-body italic text-sm">A taste of what your mom's song could feel like.</p>
+      </div>
+    </section>
+
+    <!-- Section 3 — Form -->
+    <section class="px-4 pb-16" id="form-section" data-aos="fade-up">
+      <div class="max-w-xl mx-auto">
+        <h2 class="font-display text-white uppercase tracking-wide text-2xl mb-2 text-center">HER STORY.</h2>
+        <p class="text-secondary font-body text-center mb-10 text-sm">Tell us about her. We'll make a song from what you give us.</p>
+
+        <!-- Form -->
+        <div id="form-container">
+          <form id="mothersday-form" class="flex flex-col gap-6" novalidate>
+            <div>
+              <label class="form-label" for="md-your-name">Your name<span class="required-asterisk">*</span></label>
+              <input type="text" id="md-your-name" name="your_name" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label" for="md-moms-name">Mom's name (as you want it sung)<span class="required-asterisk">*</span></label>
+              <p class="text-muted text-xs mb-2">Phonetic spelling helps if her name is uncommon.</p>
+              <input type="text" id="md-moms-name" name="moms_name" class="form-input" required>
+            </div>
+            <div>
+              <label class="form-label" for="md-her-story">One thing she always says, OR a short story about her<span class="required-asterisk">*</span></label>
+              <p class="text-muted text-xs mb-2">You can share much more than a single phrase, inside joke, or memory — give us as much detail as you want about her story, personality, and what makes her special.</p>
+              <textarea id="md-her-story" name="her_story" class="form-input" rows="4" required></textarea>
+            </div>
+            <div>
+              <label class="form-label">Preferred delivery method<span class="required-asterisk">*</span></label>
+              <div class="flex flex-col gap-2">
+                <label class="form-radio-label text-white"><input type="radio" name="delivery_method" value="WhatsApp" required> WhatsApp</label>
+                <label class="form-radio-label text-white"><input type="radio" name="delivery_method" value="Email"> Email</label>
+              </div>
+            </div>
+            <div id="md-contact-field-container" class="hidden">
+              <label class="form-label" for="md-contact-detail">Contact for delivery<span class="required-asterisk">*</span></label>
+              <p id="md-contact-helper" class="text-muted text-xs mb-2"></p>
+              <input type="text" id="md-contact-detail" name="contact_detail" class="form-input">
+            </div>
+
+            <!-- Optional email for confirmation when delivery is non-Email -->
+            <div id="optional-email-container" class="hidden mt-4">
+              <label for="confirmation_email" class="form-label">
+                Want a confirmation email? <span class="text-muted normal-case tracking-normal">(optional)</span>
+              </label>
+              <input
+                type="email"
+                id="confirmation_email"
+                name="confirmation_email"
+                class="form-input"
+                placeholder="your@email.com"
+                inputmode="email"
+                autocomplete="email">
+              <p class="text-muted text-xs mt-2 italic">We'll send a confirmation email so you have a record of your brief. We won't add you to any list.</p>
+            </div>
+
+            <button type="submit" id="md-submit-btn" class="btn-orange-pill glow-orange w-full mt-2">SEND HER STORY →</button>
+          </form>
+        </div>
+
+        <!-- Success State -->
+        <div id="md-success-message" class="hidden text-center py-10">
+          <h3 class="font-display text-white uppercase text-2xl mb-4">GOT HER NAME. WE'RE ON IT.</h3>
+          <p class="text-secondary font-body mb-4" style="line-height:1.6;">
+            Your request is in. We'll make her song and deliver via <strong id="md-delivery-confirm" class="text-white"></strong> on Tuesday May 6th.
+          </p>
+          <p class="text-secondary font-body mb-8" style="line-height:1.6;">
+            While you wait, follow us on Instagram for behind-the-scenes — and tell another friend whose mom deserves one. We're capping at 40 requests total.
+          </p>
+          <a href="https://www.instagram.com/aifrobeats/" target="_blank" rel="noopener noreferrer" class="btn-orange-pill glow-orange">FOLLOW ON INSTAGRAM →</a>
+          <p class="text-muted font-body italic text-sm mt-8">— Aifrobeats</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Overflow / campaign closed state -->
+    <section id="mothersday-closed" class="hidden px-4 py-16">
+      <div class="max-w-2xl mx-auto text-center">
+
+        <div class="inline-flex items-center gap-3 px-5 py-3 rounded-full mb-8" style="border: 1px solid var(--border-accent); background-color: rgba(255, 107, 53, 0.08);">
+          <span class="font-display text-xs uppercase tracking-wide" style="color: var(--accent-primary);">ALL 40 FREE SLOTS ARE FULL</span>
+        </div>
+
+        <h2 class="font-display text-white uppercase mb-6" style="font-size: var(--text-section); line-height: 1.2;">
+          WE FILLED UP FAST. <br>BUT YOUR MOM STILL DESERVES A SONG.
+        </h2>
+
+        <p class="text-secondary text-lg mb-12 italic" style="line-height: 1.6;">
+          The free 40 went quicker than we expected. If your mom still deserves an Afrobeats song this Mother's Day — and she does — here's what we can do.
+        </p>
+
+        <!-- Overflow offer card -->
+        <div class="pkg-card text-left" style="max-width: 540px; margin: 0 auto;">
+
+          <p class="font-display uppercase tracking-wide text-xs mb-4" style="color: var(--accent-primary);">
+            MOTHER'S DAY OVERFLOW · 30% OFF
+          </p>
+
+          <h3 class="font-display text-white uppercase mb-3" style="font-size: var(--text-card-title);">
+            A FULL CUSTOM SONG FOR YOUR MOM.
+          </h3>
+
+          <p class="text-secondary mb-6" style="line-height: 1.6;">
+            Same craft as the free songs — just paid this time, and 30% off our regular For Her / For Him rate as a thank-you for caring enough to come this far. Delivered before Mother's Day if ordered by Tuesday May 6th.
+          </p>
+
+          <div class="text-center mb-6">
+            <p class="text-muted text-sm" style="text-decoration: line-through;">$35</p>
+            <p class="font-display" style="font-size: 2.5rem; color: var(--accent-primary); line-height: 1;">$24.50</p>
+            <p class="text-muted text-xs italic mt-2">Use code MOTHERSDAY30 at checkout</p>
+          </div>
+
+          <a href="https://aifrobeats.gumroad.com/l/for-her-for-him?wanted=true" class="btn-orange-pill glow-orange uppercase text-sm w-full text-center" style="display: block;">
+            GET HER A SONG ANYWAY →
+          </a>
+
+          <p class="text-muted text-xs italic mt-4 text-center">
+            Or commission the full <a href="https://aifrobeats.gumroad.com/l/aifrobeats-album" style="color: var(--accent-primary); text-decoration: underline;">Aifrobeats Album</a> — three songs for $49 (no extra discount, but it's already half what they cost individually).
+          </p>
+
+        </div>
+
+        <p class="text-muted text-sm mt-12 italic">
+          Want first dibs on the next free campaign? Follow us on
+          <a href="https://www.instagram.com/aifrobeats/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: underline;">Instagram</a> and
+          <a href="https://x.com/aifrobeats" target="_blank" rel="noopener noreferrer" style="color: var(--accent-primary); text-decoration: underline;">Twitter</a> — Father's Day is June 21st.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- Divider between form and album upsell -->
+    <div class="px-4"><div class="divider" style="background-color:var(--accent-primary); opacity:0.3; max-width:900px; margin:0 auto;"></div></div>
+
+    <!-- Section 4 — Album Upsell -->
+    <section class="px-4 pt-16 pb-16 mt-0 md:mt-6" data-aos="fade-up">
+      <div class="max-w-4xl mx-auto text-center mb-10">
+        <h2 class="font-display text-white uppercase tracking-wide text-2xl mb-2">WANT MORE THAN A SONG?</h2>
+        <p class="text-secondary font-body italic text-sm mx-auto" style="max-width:600px;">The free song is one moment. An album is her whole story.</p>
+      </div>
+      <div class="pkg-card mx-auto" style="max-width:600px;" data-aos="fade-up">
+        <p class="font-display tracking-wide uppercase text-xs mb-3" style="color: var(--accent-primary);">AIFROBEATS ALBUM · MOTHER'S DAY EDITION</p>
+        <h3 class="font-display text-white uppercase text-card-title mb-4">THREE SONGS. ONE STORY. ALL HERS.</h3>
+        <p class="text-secondary font-body mb-2" style="line-height:1.6;">
+          Three custom Afrobeats songs made just for your mom — each capturing a different chapter of who she is. Her energy. Her struggle. Her joy. Delivered as a single album she'll play for years.
+        </p>
+        <p class="text-secondary font-body mb-6" style="line-height:1.6;">
+          Briefed via WhatsApp after purchase. Delivered before Mother's Day if ordered by Tuesday May 6th.
+        </p>
+        <div class="text-center mb-6">
+          <p class="text-muted font-body mb-1" style="text-decoration:line-through; font-size:0.9rem;">$105</p>
+          <p class="font-display" style="color: var(--accent-primary); font-size:2.5rem; line-height:1;">$49</p>
+          <p class="text-muted font-body italic text-xs mt-1">Save $56 vs. our regular three-song pricing</p>
+        </div>
+        <a href="https://aifrobeats.gumroad.com/l/aifrobeats-album" target="_blank" rel="noopener noreferrer" class="btn-orange-pill glow-orange w-full block text-center">GET HER THE ALBUM →</a>
+        <p class="text-center text-muted font-body mt-3" style="font-size:0.75rem;">Briefed via WhatsApp after purchase · Delivered before Mother's Day · Pay securely via Gumroad</p>
+      </div>
+    </section>
+
+    <!-- Section 5 — FAQ -->
+    <section class="px-4 pb-20" data-aos="fade-up">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-display text-white uppercase tracking-wide text-2xl mb-8 text-center">QUICK QUESTIONS.</h2>
+        <div class="faq-item open">
+          <div class="faq-question" role="button" tabindex="0">
+            When will my song be delivered?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            All free Mother's Day songs are delivered on Tuesday May 6th. We'll send to whichever contact method you chose. Album orders ship in the order they're received — order by Tuesday May 6th to get yours before Mother's Day itself.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" role="button" tabindex="0">
+            What if I miss the cutoff or all 40 spots fill up?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            If you miss it, we still got you — our regular packages start at $15 and turn around in hours. You can commission a birthday or "for her" song any day of the year. Or just save us for next Mother's Day.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" role="button" tabindex="0">
+            Can the song be in another language?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Yes. Yoruba, Igbo, Hausa, French, Spanish, Pidgin — whatever language she speaks at home, we'll work it into the song. Just mention it in the "story" field above.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="px-4 py-16 mt-10">
+    <div class="divider mb-16"></div>
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">EXPLORE</h4>
+        <ul class="flex flex-col gap-4 text-secondary text-sm">
+          <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="drops.html" class="hover:text-white transition-colors">Drops</a></li>
+          <li><a href="index.html#packages" class="hover:text-white transition-colors">Packages</a></li>
+          <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#how-it-works" class="hover:text-white transition-colors">How it works</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">INFO</h4>
+        <ul class="flex flex-col gap-4 text-secondary text-sm">
+          <li><a href="index.html#faq" class="hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="index.html#faq" class="hover:text-white transition-colors">Delivery &amp; revisions</a></li>
+          <li><a href="commission.html" class="hover:text-white transition-colors">Commission</a></li>
+          <li><a href="licensing.html" class="hover:text-white transition-colors">Licensing</a></li>
+          <li><a href="legal.html" class="hover:text-white transition-colors">Legal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-display text-white uppercase mb-6 tracking-wide text-sm">LET'S TALK</h4>
+        <p class="text-secondary text-sm mb-4">Chat with us on WhatsApp</p>
+        <a href="https://wa.me/2348053717830" class="flex items-center gap-2 text-white hover:text-accent-primary transition-colors mb-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          +234 805 371 7830
+        </a>
+        <div class="flex gap-4">
+          <a href="https://www.instagram.com/aifrobeats/" target="_blank" rel="noopener noreferrer" aria-label="Aifrobeats on Instagram" class="text-secondary hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+          <a href="https://x.com/aifrobeats" target="_blank" rel="noopener noreferrer" aria-label="Aifrobeats on X" class="text-secondary hover:text-white transition-colors"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L2.007 2.25H8.08l4.264 5.638 5.9-5.638Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="divider mb-8"></div>
+    <p class="text-center text-muted font-display tracking-wide text-xs uppercase">© 2026 AIFROBEATS. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="/js/main.js"></script>
+
+  <script>
+    // --- Check campaign state on load ---
+    (function() {
+      const stateEl = document.getElementById('mothersday-state');
+      const campaignState = stateEl ? stateEl.getAttribute('data-campaign-state') : 'open';
+
+      if (campaignState === 'closed') {
+        const heroSection = document.getElementById('mothersday-hero');
+        const spotSection = document.getElementById('mothersday-spot-section');
+        const sampleSection = document.getElementById('mothersday-sample-section');
+        const formSection = document.getElementById('form-section');
+
+        if (heroSection) heroSection.classList.add('hidden');
+        if (spotSection) spotSection.classList.add('hidden');
+        if (sampleSection) sampleSection.classList.add('hidden');
+        if (formSection) formSection.classList.add('hidden');
+
+        const closedSection = document.getElementById('mothersday-closed');
+        if (closedSection) closedSection.classList.remove('hidden');
+
+        document.title = 'Aifrobeats | Mother\'s Day — All Free Slots Full';
+      }
+    })();
+
+    // --- Mother's Day Audio Sample Player ---
+    (function() {
+      const playBtn = document.getElementById('sample-play-btn');
+      const waveform = document.getElementById('sample-waveform');
+      const timeDisplay = document.getElementById('sample-time');
+      const audio = new Audio('/music/samples/mothersday-sample.mp3');
+      let isPlaying = false;
+
+      for (let i = 0; i < 40; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'waveform-bar';
+        bar.style.animationDelay = Math.random() + 's';
+        bar.style.animationDuration = (0.5 + Math.random()) + 's';
+        waveform.appendChild(bar);
+      }
+
+      function formatTime(s) {
+        if (isNaN(s)) return '00:00';
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60);
+        return m.toString().padStart(2,'0') + ':' + sec.toString().padStart(2,'0');
+      }
+
+      function setPlaying(state) {
+        isPlaying = state;
+        if (state) {
+          playBtn.classList.add('playing');
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+          waveform.classList.add('playing');
+        } else {
+          playBtn.classList.remove('playing');
+          playBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+          waveform.classList.remove('playing');
+        }
+      }
+
+      playBtn.addEventListener('click', function() {
+        if (isPlaying) { audio.pause(); } else { audio.play().catch(function(e) { console.warn('Sample audio unavailable:', e); }); }
+      });
+      audio.addEventListener('play', function() { setPlaying(true); });
+      audio.addEventListener('pause', function() { setPlaying(false); });
+      audio.addEventListener('ended', function() { setPlaying(false); audio.currentTime = 0; });
+      audio.addEventListener('timeupdate', function() { timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration); });
+      audio.addEventListener('loadedmetadata', function() { timeDisplay.textContent = '00:00 / ' + formatTime(audio.duration); });
+      audio.addEventListener('error', function() { console.warn('Mother\'s Day sample not yet available — player activates once file is uploaded.'); });
+    })();
+
+    // --- Mother's Day Form ---
+    (function() {
+      const form = document.getElementById('mothersday-form');
+      if (!form) return;
+
+      if (typeof emailjs !== 'undefined' && typeof emailjs.init === 'function') {
+        emailjs.init({ publicKey: 'u899JogrVD_YHNQIU' });
+      }
+
+      const deliveryRadios = document.querySelectorAll('input[name="delivery_method"]');
+      const contactContainer = document.getElementById('md-contact-field-container');
+      const contactInput = document.getElementById('md-contact-detail');
+      const contactHelper = document.getElementById('md-contact-helper');
+      const optionalEmailContainer = document.getElementById('optional-email-container');
+      const optionalEmailInput = document.getElementById('confirmation_email');
+
+      deliveryRadios.forEach(function(radio) {
+        radio.addEventListener('change', function(e) {
+          const method = e.target.value;
+          contactContainer.classList.remove('hidden');
+          contactInput.setAttribute('required', 'required');
+
+          if (method === 'Email') {
+            contactHelper.textContent = 'Your email address';
+            contactInput.placeholder = 'you@example.com';
+            contactInput.setAttribute('inputmode', 'email');
+            if (optionalEmailContainer) {
+              optionalEmailContainer.classList.add('hidden');
+              if (optionalEmailInput) optionalEmailInput.value = '';
+            }
+          } else {
+            contactHelper.textContent = 'Your phone number with country code';
+            contactInput.placeholder = '+234 800 000 0000';
+            contactInput.setAttribute('inputmode', 'tel');
+            if (optionalEmailContainer) {
+              optionalEmailContainer.classList.remove('hidden');
+            }
+          }
+        });
+      });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitBtn = document.getElementById('md-submit-btn');
+        submitBtn.textContent = 'SENDING...';
+        submitBtn.disabled = true;
+
+        if (typeof emailjs === 'undefined') {
+          alert('EmailJS is not loaded. Please check your connection.');
+          submitBtn.textContent = 'SEND HER STORY \u2192';
+          submitBtn.disabled = false;
+          return;
+        }
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // --- Mother's Day specific flags & metadata ---
+        data.is_mothersday = true;
+        data.is_for_her_him = false;
+        data.is_birthday = false;
+        data.is_wedding = false;
+        data.is_big_vibes = false;
+        data.subject_prefix = '[MOTHERS DAY 2026]';
+        data.subject_detail = 'for ' + (data.moms_name || 'her');
+        data.selected_package = 'mothersday';
+        data.timestamp = new Date().toLocaleString('en-US', {
+          timeZone: 'Africa/Lagos',
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+
+        // --- Buyer email determination ---
+        const buyerEmail = data.delivery_method === 'Email'
+          ? data.contact_detail
+          : (data.confirmation_email && data.confirmation_email.trim() ? data.confirmation_email.trim() : null);
+
+        // --- Mother's Day buyer copy ---
+        data.buyer_subject = 'Got it \u2014 ' + (data.moms_name || 'her') + ' song is being made';
+        data.intro_message = 'Your request just landed. ' + (data.moms_name || 'Her') + ' song is officially in the queue, and we\u2019re going to make her something she\u2019ll play for years.';
+        data.next_steps = 'Your free Mother\u2019s Day song will be delivered via ' + data.delivery_method + ' on Tuesday May 6th \u2014 the day before Mother\u2019s Day itself. We\u2019re capping at 40 free songs total, so we\u2019re working through them in the order they came in. You\u2019re locked in.';
+
+        document.getElementById('md-delivery-confirm').textContent = data.delivery_method || 'your chosen method';
+
+        // --- Dual send ---
+        let adminSendSucceeded = false;
+
+        emailjs.send('service_4vh02fv', 'template_fnabhb3', data, 'u899JogrVD_YHNQIU')
+          .then(function() {
+            adminSendSucceeded = true;
+            if (buyerEmail) {
+              const buyerData = Object.assign({}, data, { contact_detail: buyerEmail });
+              return emailjs.send('service_4vh02fv', 'template_519ozz5', buyerData, 'u899JogrVD_YHNQIU');
+            }
+            return Promise.resolve();
+          })
+          .then(function() {
+            document.getElementById('form-container').classList.add('hidden');
+            document.getElementById('md-success-message').classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById('form-section').offsetTop - 80, behavior: 'smooth' });
+          })
+          .catch(function(error) {
+            console.error('EmailJS error:', error);
+            if (!adminSendSucceeded) {
+              alert('Something went wrong. Please try again or DM us on WhatsApp at +234 805 371 7830 \u2014 we want to make sure your mom gets her song.');
+              submitBtn.textContent = 'SEND HER STORY \u2192';
+              submitBtn.disabled = false;
+            } else {
+              console.warn('Buyer confirmation failed but admin notification succeeded.');
+              document.getElementById('form-container').classList.add('hidden');
+              document.getElementById('md-success-message').classList.remove('hidden');
+              window.scrollTo({ top: document.getElementById('form-section').offsetTop - 80, behavior: 'smooth' });
+            }
+          });
+      });
+    })();
+  </script>
+
+</body>
+</html>

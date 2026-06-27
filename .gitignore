@@ -1,0 +1,12 @@
+﻿node_modules/
+.env
+.env.*
+.dev.vars
+.wrangler/
+.DS_Store
+*.zip
+*.mp3
+*.wav
+*.mp4
+/dist/
+/music/

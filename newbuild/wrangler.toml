@@ -1,0 +1,11 @@
+name = "aifrobeats"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aifrobeats-db"
+database_id = "b408ac8e-46ad-4f6f-9ae6-f2fc1f2696cb"
+
+[ai]
+binding = "AI"

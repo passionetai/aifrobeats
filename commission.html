@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aifrobeats | Commission</title>
+  <meta name="description" content="Custom Afrobeats songs, made for the people you love. In hours, not weeks. Commission yours at aifrobeats.com.">
+  <meta property="og:title" content="Aifrobeats — Custom Afrobeats Songs">
+  <meta property="og:description" content="Afrobeats songs, made for the people you love. In hours, not weeks.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aifrobeats.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/images/favicon.png">
+  
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5fdf447c3cba4ccd9f7b45aa0d13e518"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body class="antialiased">
+
+  <header class="site-header">
+    <a href="index.html" class="site-logo-link" aria-label="Aifrobeats home">
+      <img src="/images/logo.png" alt="Aifrobeats Logo" class="site-logo">
+    </a>
+    <input type="checkbox" id="site-nav-toggle" class="site-nav-toggle" aria-label="Toggle navigation">
+    <label for="site-nav-toggle" class="site-nav-button" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="drops.html">Drops</a>
+      <a href="about.html">About</a>
+      <a href="licensing.html">Licensing</a>
+    </nav>
+  </header>
+
+  <main class="px-4 py-10 max-w-2xl mx-auto">
+    <div id="success-message" class="hidden text-center py-20">
+      <h2 class="text-section font-display uppercase mb-6">GOT IT. YOUR SONG IS BEING MADE.</h2>
+      <p class="text-secondary text-lg mb-4">Your brief is in. We'll start work within the hour and deliver via your chosen contact method within your turnaround.</p>
+      <p class="text-secondary text-lg mb-8">Check for delivery. If you want to add anything you forgot, reply to the receipt email or DM us on WhatsApp.</p>
+      <a href="https://wa.me/2348053717830" class="accent-primary font-display tracking-wide text-small uppercase flex items-center justify-center gap-1">MESSAGE US ON WHATSAPP <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+    </div>
+
+    <div id="form-container">
+      <h1 class="text-section font-display uppercase mb-6">Tell us about their song.</h1>
+      
+      <div class="bg-bg-secondary p-6 rounded-2xl border border-border-subtle mb-10">
+        <p class="text-secondary mb-4">Prefer to explain over voice? Send a WhatsApp voice note to +234 805 371 7830 with your order ID and skip the form — whatever's easier for you.</p>
+        <a href="https://wa.me/2348053717830?text=Order%20ID%3A%20" class="accent-primary font-display tracking-wide text-tiny uppercase flex items-center gap-1">SEND VOICE NOTE ON WHATSAPP <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a>
+      </div>
+
+      <form id="commission-form" class="flex flex-col gap-8">
+        
+        <!-- Package Selector (Conditional) -->
+        <div id="package-selector-container" class="hidden">
+          <label class="form-label">Which package did you buy?<span class="required-asterisk">*</span></label>
+          <select id="package-select" name="package_selection" class="form-input">
+            <option value="">Select a package...</option>
+            <option value="for-her-for-him">For Her / For Him</option>
+            <option value="happy-birthday">Happy Birthday</option>
+            <option value="walk-down-the-aisle">Walk Down The Aisle</option>
+            <option value="big-vibes">Big Vibes</option>
+          </select>
+        </div>
+
+        <!-- Universal Fields -->
+        <div>
+          <label class="form-label">Your name<span class="required-asterisk">*</span></label>
+          <input type="text" name="your_name" class="form-input" required>
+        </div>
+        
+        <div>
+          <label class="form-label">Order ID<span class="required-asterisk">*</span></label>
+          <p class="text-muted text-xs mb-2">Check your Gumroad receipt email for this</p>
+          <input type="text" name="order_id" class="form-input" required>
+        </div>
+
+        <div>
+          <label class="form-label">Preferred delivery method<span class="required-asterisk">*</span></label>
+          <div class="flex flex-col gap-2">
+            <label class="form-radio-label text-white"><input type="radio" name="delivery_method" value="WhatsApp" required> WhatsApp</label>
+            <label class="form-radio-label text-white"><input type="radio" name="delivery_method" value="Telegram"> Telegram</label>
+            <label class="form-radio-label text-white"><input type="radio" name="delivery_method" value="Email"> Email</label>
+          </div>
+        </div>
+
+        <div id="contact-field-container" class="hidden">
+          <label class="form-label">Contact for delivery<span class="required-asterisk">*</span></label>
+          <input type="text" id="contact_detail" name="contact_detail" class="form-input">
+        </div>
+
+        <!-- Optional email for confirmation when delivery is non-Email -->
+        <div id="optional-email-container" class="hidden mt-4">
+          <label for="confirmation_email" class="form-label">
+            Want a confirmation email? <span class="text-muted normal-case tracking-normal">(optional)</span>
+          </label>
+          <input
+            type="email"
+            id="confirmation_email"
+            name="confirmation_email"
+            class="form-input"
+            placeholder="your@email.com"
+            inputmode="email"
+            autocomplete="email">
+          <p class="text-muted text-xs mt-2 italic">We'll send a confirmation email so you have a record of your brief. We won't add you to any list.</p>
+        </div>
+
+        <!-- PACKAGE SPECIFIC FIELDS -->
+
+        <!-- For Her / For Him -->
+        <div id="fields-for-her" class="hidden flex flex-col gap-8 border-t border-border-subtle pt-8">
+          <div>
+            <label class="form-label">Who's this for?<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">Partner's name as you want it said in the song</p>
+            <input type="text" name="partner_name" class="form-input" data-required="true">
+          </div>
+          <div>
+            <label class="form-label">How did you two meet?<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">A few sentences is plenty</p>
+            <textarea name="how_met" class="form-input" rows="3" data-required="true"></textarea>
+          </div>
+          <div>
+            <label class="form-label">What's something only the two of you would get?</label>
+            <p class="text-muted text-xs mb-2">Inside joke, nickname, shared memory, a place that means something</p>
+            <textarea name="shared_thing" class="form-input" rows="3"></textarea>
+          </div>
+          <div>
+            <label class="form-label">The vibe you want<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Tender and emotional" data-required="true"> Tender and emotional</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Hype and celebratory"> Hype and celebratory</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Smooth and groove-y"> Smooth and groove-y</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Playful and fun"> Playful and fun</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">What's this song for?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Proposal" data-required="true"> Proposal</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Anniversary"> Anniversary</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Apology"> Apology</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Just because"> "Just because"</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Long-distance"> Long-distance</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Valentine's"> Valentine's</label>
+              <label class="form-radio-label text-white"><input type="radio" name="occasion" value="Other"> Other</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Anything you want me to avoid?</label>
+            <textarea name="avoid" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Anything else I should know?</label>
+            <textarea name="extra_notes" class="form-input" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Happy Birthday -->
+        <div id="fields-birthday" class="hidden flex flex-col gap-8 border-t border-border-subtle pt-8">
+          <div>
+            <label class="form-label">Whose birthday is it?<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">Their name, exactly as it should be sung</p>
+            <input type="text" name="birthday_name" class="form-input" data-required="true">
+          </div>
+          <div>
+            <label class="form-label">How do you know them?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="My partner" data-required="true"> My partner</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Sibling"> Sibling</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Parent"> Parent</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Best friend"> Best friend</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Child"> Child</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Colleague"> Colleague</label>
+              <label class="form-radio-label text-white"><input type="radio" name="relationship" value="Other"> Other</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Tell me about them — what are they like?<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">Personality, what makes them them</p>
+            <textarea name="about_them" class="form-input" rows="3" data-required="true"></textarea>
+          </div>
+          <div>
+            <label class="form-label">What vibe do you want?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Hype them up" data-required="true"> Hype them up</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Make them laugh"> Make them laugh</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Get emotional"> Get emotional</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Mix of all three"> Mix of all three</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Any inside jokes or specific things to reference?</label>
+            <textarea name="inside_jokes" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Anything I should avoid mentioning?</label>
+            <textarea name="avoid" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">When do you need it?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="needed_by" value="Today" data-required="true"> Today</label>
+              <label class="form-radio-label text-white"><input type="radio" name="needed_by" value="Tomorrow"> Tomorrow</label>
+              <label class="form-radio-label text-white"><input type="radio" name="needed_by" value="Within the week"> Within the week</label>
+              <label class="form-radio-label text-white"><input type="radio" name="needed_by" value="Specific date"> Specific date (mention in "Anything else")</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Anything else I should know?</label>
+            <textarea name="extra_notes" class="form-input" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Walk Down The Aisle -->
+        <div id="fields-wedding" class="hidden flex flex-col gap-8 border-t border-border-subtle pt-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">Partner 1 Name<span class="required-asterisk">*</span></label>
+              <input type="text" name="partner_1" class="form-input" data-required="true">
+            </div>
+            <div>
+              <label class="form-label">Partner 2 Name<span class="required-asterisk">*</span></label>
+              <input type="text" name="partner_2" class="form-input" data-required="true">
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Wedding date<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">Must be at least 3 days from today for standard delivery</p>
+            <input type="date" name="wedding_date" class="form-input w-full" data-required="true">
+          </div>
+          <div>
+            <label class="form-label">How did they meet?<span class="required-asterisk">*</span></label>
+            <textarea name="how_met" class="form-input" rows="3" data-required="true"></textarea>
+          </div>
+          <div>
+            <label class="form-label">A moment or memory that captures them<span class="required-asterisk">*</span></label>
+            <textarea name="couple_moment" class="form-input" rows="3" data-required="true"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Whose perspective should the song be from?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="perspective" value="Partner 1 to Partner 2" data-required="true"> Partner 1 to Partner 2</label>
+              <label class="form-radio-label text-white"><input type="radio" name="perspective" value="Partner 2 to Partner 1"> Partner 2 to Partner 1</label>
+              <label class="form-radio-label text-white"><input type="radio" name="perspective" value="Neutral, celebrating both"> Neutral, celebrating both</label>
+              <label class="form-radio-label text-white"><input type="radio" name="perspective" value="Family/Friend"> A family member or friend</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Which moment is the song for?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="checkbox" name="wedding_moment" value="Walking down the aisle"> Walking down the aisle</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="wedding_moment" value="First dance"> First dance</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="wedding_moment" value="Reception celebration"> Reception celebration</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="wedding_moment" value="Surprise during speeches"> Surprise during speeches</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="wedding_moment" value="Other"> Other</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Tone balance<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="tone_balance" value="More danceable" data-required="true"> More danceable</label>
+              <label class="form-radio-label text-white"><input type="radio" name="tone_balance" value="Balanced"> Balanced</label>
+              <label class="form-radio-label text-white"><input type="radio" name="tone_balance" value="More emotional"> More emotional</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Any cultural specifics?</label>
+            <p class="text-muted text-xs mb-2">Yoruba, Igbo, Hausa, mixed-heritage, specific references</p>
+            <textarea name="cultural_specifics" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Any requests for the parents?</label>
+            <textarea name="parent_requests" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Anything else?</label>
+            <textarea name="extra_notes" class="form-input" rows="2"></textarea>
+          </div>
+        </div>
+
+        <!-- Big Vibes -->
+        <div id="fields-big-vibes" class="hidden flex flex-col gap-8 border-t border-border-subtle pt-8">
+          <div>
+            <label class="form-label">Business / brand name<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">Exactly as it should be said</p>
+            <input type="text" name="business_name" class="form-input" data-required="true">
+          </div>
+          <div>
+            <label class="form-label">Phonetic pronunciation</label>
+            <p class="text-muted text-xs mb-2">If unusual, e.g. "Iya Basira → ee-ya ba-see-ra"</p>
+            <input type="text" name="pronunciation" class="form-input">
+          </div>
+          <div>
+            <label class="form-label">What does the business do?<span class="required-asterisk">*</span></label>
+            <p class="text-muted text-xs mb-2">What you sell, who your customers are, what makes you different</p>
+            <textarea name="business_description" class="form-input" rows="3" data-required="true"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Tagline or key message</label>
+            <p class="text-muted text-xs mb-2">If you want a specific phrase in the jingle</p>
+            <input type="text" name="tagline" class="form-input">
+          </div>
+          <div>
+            <label class="form-label">Where will this jingle live?<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="Social media ads"> Social media ads</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="Podcast intro"> Podcast intro</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="YouTube intro"> YouTube intro</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="In-store"> In-store</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="Radio ads"> Radio ads</label>
+              <label class="form-radio-label text-white"><input type="checkbox" name="jingle_placement" value="Other"> Other</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Jingle length preference<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="jingle_length" value="15 seconds" data-required="true"> 15 seconds (stinger)</label>
+              <label class="form-radio-label text-white"><input type="radio" name="jingle_length" value="30 seconds"> 30 seconds (standard)</label>
+              <label class="form-radio-label text-white"><input type="radio" name="jingle_length" value="60 seconds"> 60 seconds (full)</label>
+              <label class="form-radio-label text-white"><input type="radio" name="jingle_length" value="Not sure"> Not sure, you decide</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Vibe<span class="required-asterisk">*</span></label>
+            <div class="flex flex-col gap-2">
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Luxury and smooth" data-required="true"> Luxury and smooth</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Hype and energetic"> Hype and energetic</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Warm and welcoming"> Warm and welcoming</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Bold and confident"> Bold and confident</label>
+              <label class="form-radio-label text-white"><input type="radio" name="vibe" value="Chill and laid-back"> Chill and laid-back</label>
+            </div>
+          </div>
+          <div>
+            <label class="form-label">Reference track</label>
+            <p class="text-muted text-xs mb-2">Link to any Afrobeats song that has the energy you want</p>
+            <input type="text" name="reference_track" class="form-input">
+          </div>
+          <div>
+            <label class="form-label">Anything to avoid?</label>
+            <textarea name="avoid" class="form-input" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="form-label">Anything else?</label>
+            <textarea name="extra_notes" class="form-input" rows="2"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn-orange-pill glow-orange w-full mt-6">SEND BRIEF →</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="px-4 py-8 mt-auto text-center border-t border-border-divider">
+    <p class="text-muted font-display tracking-wide text-xs uppercase">© 2026 AIFROBEATS. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
