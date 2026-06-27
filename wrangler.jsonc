@@ -1,0 +1,24 @@
+{
+  // Production Worker for aifrobeats. Serves the static site via the assets
+  // binding and gates audio delivery from a private R2 bucket (see worker/index.js).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aifrobeats",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-06-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS"
+  },
+  // The audio bucket. Set "bucket_name" to the real R2 bucket that holds the
+  // music/ objects (the one currently exposed at
+  // pub-8771ce6470a54274832f9cae71dc15c3.r2.dev). Make that bucket private so
+  // the only way in is this Worker.
+  "r2_buckets": [
+    {
+      "binding": "AUDIO_BUCKET",
+      "bucket_name": "replace-with-audio-bucket-name"
+    }
+  ]
+}
