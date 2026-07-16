@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Track, getTrack, coverUrl } from "../lib/api";
 import { usePlayer } from "../context/PlayerContext";
 import VoteButton from "../components/VoteButton";
+import ReactionBar from "../components/ReactionBar";
+import CommentSection from "../components/CommentSection";
 
 export default function TrackDetail() {
   const { id } = useParams();
@@ -36,6 +38,8 @@ export default function TrackDetail() {
           </div>
         </div>
       </div>
+      <ReactionBar trackId={track.id} />
+      <CommentSection trackId={track.id} />
     </main>
   );
 }

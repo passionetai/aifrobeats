@@ -4,6 +4,7 @@ import auth from "./auth/routes";
 import tracks from "./routes/tracks";
 import votes from "./routes/votes";
 import chart from "./routes/chart";
+import comments from "./routes/comments";
 import admin from "./routes/admin";
 import { recomputeChart } from "./jobs/recompute-chart";
 
@@ -12,7 +13,7 @@ const app = new Hono<{ Bindings: Env }>();
 // --- API ---------------------------------------------------------------
 
 // Liveness check.
-app.get("/api/health", (c) => c.json({ ok: true, service: "aifrobeats", phase: 0 }));
+app.get("/api/health", (c) => c.json({ ok: true, service: "aifrobeats", phase: "1c" }));
 
 // Confirms D1 is wired. Returns the current track count (0 until content loads).
 app.get("/api/status", async (c) => {
@@ -31,6 +32,7 @@ app.route("/api/auth", auth);
 app.route("/api/tracks", tracks);
 app.route("/api", votes);        // /api/tracks/:id/vote, /api/me/votes
 app.route("/api/chart", chart);
+app.route("/api", comments);     // /api/tracks/:id/comments, /api/comments/:id, /api/tracks/:id/reactions
 app.route("/api/admin", admin);
 
 // Mounts in later sittings:

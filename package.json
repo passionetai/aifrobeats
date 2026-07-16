@@ -17,13 +17,13 @@
     "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250109.0",
+    "@cloudflare/workers-types": "^5.20260716.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.7",
-    "wrangler": "^3.99.0"
+    "wrangler": "^4.111.0"
   }
 }

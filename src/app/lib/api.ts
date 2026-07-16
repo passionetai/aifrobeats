@@ -66,3 +66,56 @@ export async function castVote(id: string, on: boolean): Promise<{ ok: boolean; 
   const data = (await res.json()) as { ok?: boolean; score?: number; error?: string };
   return { ok: !!data.ok, score: data.score, error: data.error };
 }
+
+export interface Comment {
+  id: string;
+  body: string;
+  created_at: string;
+  handle: string;
+  display_name: string;
+}
+
+export async function getComments(trackId: string): Promise<Comment[]> {
+  const res = await fetch(`/api/tracks/${trackId}/comments`);
+  const data = (await res.json()) as { comments: Comment[] };
+  return data.comments ?? [];
+}
+
+export async function postComment(trackId: string, body: string): Promise<{ ok: boolean; comment?: Comment; error?: string }> {
+  const res = await fetch(`/api/tracks/${trackId}/comments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ body }),
+  });
+  const data = (await res.json()) as { ok?: boolean; comment?: Comment; error?: string };
+  return { ok: !!data.ok, comment: data.comment, error: data.error };
+}
+
+export async function deleteComment(commentId: string): Promise<boolean> {
+  const res = await fetch(`/api/comments/${commentId}`, { method: "DELETE", credentials: "same-origin" });
+  const data = (await res.json()) as { ok?: boolean };
+  return !!data.ok;
+}
+
+export interface Reactions {
+  counts: Record<string, number>;
+  mine: string[];
+  palette: string[];
+}
+
+export async function getReactions(trackId: string): Promise<Reactions> {
+  const res = await fetch(`/api/tracks/${trackId}/reactions`, { credentials: "same-origin" });
+  return (await res.json()) as Reactions;
+}
+
+export async function toggleReaction(trackId: string, emoji: string): Promise<{ ok: boolean; on?: boolean; error?: string }> {
+  const res = await fetch(`/api/tracks/${trackId}/reactions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ emoji }),
+  });
+  const data = (await res.json()) as { ok?: boolean; on?: boolean; error?: string };
+  return { ok: !!data.ok, on: data.on, error: data.error };
+}
