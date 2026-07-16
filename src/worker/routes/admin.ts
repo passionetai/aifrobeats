@@ -102,4 +102,25 @@ admin.post("/requests/:id/fulfil", async (c) => {
   return c.json({ ok: true });
 });
 
+// POST /api/admin/radio/rotation  -> load live tracks into the radio timeline
+admin.post("/radio/rotation", async (c) => {
+  const { results } = await c.env.DB.prepare(
+    "SELECT id, title, artist, duration_sec FROM tracks WHERE status = 'live' ORDER BY released_at DESC LIMIT 100"
+  ).all<{ id: string; title: string; artist: string; duration_sec: number | null }>();
+  const rotation = (results ?? []).map((t) => ({
+    id: t.id,
+    title: t.title,
+    artist: t.artist,
+    dur: t.duration_sec && t.duration_sec > 5 ? t.duration_sec : 210,
+  }));
+  const roomId = c.env.RADIO.idFromName("global");
+  const room = c.env.RADIO.get(roomId);
+  await room.fetch(new Request("https://radio/rotation", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rotation }),
+  }));
+  return c.json({ ok: true, count: rotation.length });
+});
+
 export default admin;

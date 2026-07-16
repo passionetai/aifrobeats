@@ -42,6 +42,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={() => setPlaying(false)}
+        onLoadedMetadata={() => {
+          const el = audioRef.current;
+          if (el && current && el.duration && isFinite(el.duration)) {
+            fetch(`/api/tracks/${current.id}/duration`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ seconds: Math.round(el.duration) }),
+            }).catch(() => {});
+          }
+        }}
         hidden
       />
     </Ctx.Provider>

@@ -36,23 +36,23 @@ APP_URL = "https://aifrobeats.com"
 [triggers]
 crons = ["0 * * * *"]
 
+# Phase 3 synced radio. SQLite-backed DO is the only free-plan option, so it
+# MUST be declared with new_sqlite_classes.
+[durable_objects]
+bindings = [ { name = "RADIO", class_name = "RadioRoom" } ]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RadioRoom"]
+
 # =====================================================================
-# ENABLE IN LATER PHASES. Uncomment when you reach them so the very
-# first Phase 0 deploy has the fewest moving parts.
+# ENABLE IN LATER PHASES.
 #
-# Phase 2/4 background notifications:
+# Phase 4 background notifications:
 # [[queues.producers]]
 # binding = "NOTIFY_QUEUE"
 # queue = "aifrobeats-notify"
 # [[queues.consumers]]
 # queue = "aifrobeats-notify"
 # max_batch_size = 10
-#
-# Phase 3 synced radio (SQLite-backed DO is the ONLY free-plan option,
-# so it MUST be declared with new_sqlite_classes, never new_classes):
-# [durable_objects]
-# bindings = [ { name = "RADIO", class_name = "RadioRoom" } ]
-# [[migrations]]
-# tag = "v1"
-# new_sqlite_classes = ["RadioRoom"]
 # =====================================================================

@@ -76,4 +76,17 @@ tracks.post("/:id/play", async (c) => {
   return c.json({ ok: true });
 });
 
+// POST /api/tracks/:id/duration { seconds }  -> backfill duration if missing
+tracks.post("/:id/duration", async (c) => {
+  const id = c.req.param("id");
+  const { seconds } = await c.req.json<{ seconds?: number }>().catch(() => ({ seconds: 0 }));
+  const s = Math.round(Number(seconds) || 0);
+  if (s > 5 && s < 3600) {
+    await c.env.DB.prepare(
+      "UPDATE tracks SET duration_sec = ? WHERE id = ? AND (duration_sec IS NULL OR duration_sec = 0)"
+    ).bind(s, id).run();
+  }
+  return c.json({ ok: true });
+});
+
 export default tracks;

@@ -17,6 +17,9 @@ export interface Env {
   // Bootstrap admin gate for Phase 1a uploads. Replaced by role-based auth in Phase 1b.
   ADMIN_TOKEN?: string;
 
+  // Phase 3 synced radio.
+  RADIO: DurableObjectNamespace;
+
   // Enabled in later phases:
   // NOTIFY_QUEUE: Queue;              // Phase 2/4
   // RADIO: DurableObjectNamespace;    // Phase 3

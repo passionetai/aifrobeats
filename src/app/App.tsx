@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import Onboard from "./pages/Onboard";
 import RequestBooth from "./pages/RequestBooth";
+import LiveRoom from "./pages/LiveRoom";
 
 function Soon({ title, phase }: { title: string; phase: string }) {
   return (
@@ -36,7 +37,7 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/onboard" element={<Onboard />} />
               <Route path="/booth" element={<RequestBooth />} />
-              <Route path="/live" element={<Soon title="Live Room" phase="Phase 3" />} />
+              <Route path="/live" element={<LiveRoom />} />
               <Route path="/curators" element={<Soon title="Curators" phase="Phase 4" />} />
               <Route path="/u/:handle" element={<Soon title="Profiles" phase="Phase 4" />} />
               <Route path="*" element={<Soon title="Not found" phase="a later phase" />} />

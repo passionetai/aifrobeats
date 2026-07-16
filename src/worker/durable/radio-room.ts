@@ -1,21 +1,15 @@
 // RadioRoom Durable Object (Phase 3).
-// Holds shared radio state so every listener hears the same track at the
-// same moment. Uses the WebSocket Hibernation API so it is not billed while
-// idle. NOT bound yet: enable the durable_objects block in wrangler.toml and
-// export this class from src/worker/index.ts when you reach Phase 3.
+// One shared radio timeline. Every listener derives "what is playing now" from
+// the same rotation + anchor time, so everyone hears the same track at the same
+// moment. The room also relays live chat and reactions. Uses the WebSocket
+// Hibernation API so it costs nothing while idle.
 import type { Env } from "../env";
 
-interface NowPlaying {
-  trackId: string;
-  startedAt: number; // epoch ms, server clock, so clients can compute offset
-  durationSec: number;
-}
+interface RotItem { id: string; title: string; artist: string; dur: number }
 
 export class RadioRoom {
   private state: DurableObjectState;
   private env: Env;
-  private current: NowPlaying | null = null;
-  private queue: string[] = [];
 
   constructor(state: DurableObjectState, env: Env) {
     this.state = state;
@@ -23,61 +17,67 @@ export class RadioRoom {
   }
 
   async fetch(req: Request): Promise<Response> {
+    const url = new URL(req.url);
+
     if (req.headers.get("Upgrade") === "websocket") {
       const pair = new WebSocketPair();
-      // Hibernation-aware accept keeps the object cheap between messages.
-      this.state.acceptWebSocket(pair[1]);
-      this.sendState(pair[1]);
-      this.broadcastListenerCount();
-      return new Response(null, { status: 101, webSocket: pair[0] });
+      const client = pair[0];
+      const server = pair[1];
+      const handle = req.headers.get("x-handle") || "";
+      this.state.acceptWebSocket(server);
+      server.serializeAttachment({ handle });
+      server.send(JSON.stringify(await this.syncPayload()));
+      this.broadcastListeners();
+      return new Response(null, { status: 101, webSocket: client });
     }
-    if (this.current) return Response.json(this.withOffset());
-    return new Response("no track", { status: 404 });
+
+    if (url.pathname.endsWith("/now")) {
+      return Response.json(await this.syncPayload());
+    }
+
+    if (url.pathname.endsWith("/rotation") && req.method === "POST") {
+      const body = await req.json<{ rotation: RotItem[] }>().catch(() => ({ rotation: [] as RotItem[] }));
+      await this.state.storage.put("rotation", body.rotation || []);
+      await this.state.storage.put("anchor", Date.now());
+      this.broadcast(JSON.stringify(await this.syncPayload()));
+      return Response.json({ ok: true, count: (body.rotation || []).length });
+    }
+
+    return new Response("not found", { status: 404 });
   }
 
-  async webSocketMessage(_ws: WebSocket, raw: string) {
-    let data: { type?: string; text?: string; emoji?: string } = {};
-    try { data = JSON.parse(raw); } catch { return; }
-    if (data.type === "chat") this.broadcast({ type: "chat", text: data.text });
-    if (data.type === "reaction") this.broadcast({ type: "reaction", emoji: data.emoji });
+  async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    let data: { type?: string; text?: string; emoji?: string };
+    try { data = JSON.parse(typeof message === "string" ? message : ""); } catch { return; }
+    const att = (ws.deserializeAttachment() || {}) as { handle?: string };
+
+    if (data.type === "chat") {
+      if (!att.handle) return; // must be signed in to chat
+      const text = String(data.text || "").slice(0, 300).trim();
+      if (!text) return;
+      this.broadcast(JSON.stringify({ type: "chat", handle: att.handle, text }));
+    } else if (data.type === "reaction") {
+      const emoji = String(data.emoji || "").slice(0, 8);
+      if (emoji) this.broadcast(JSON.stringify({ type: "reaction", emoji }));
+    }
   }
 
-  async webSocketClose() {
-    this.broadcastListenerCount();
+  async webSocketClose() { this.broadcastListeners(); }
+  async webSocketError() { this.broadcastListeners(); }
+
+  private async syncPayload() {
+    const rotation = ((await this.state.storage.get("rotation")) as RotItem[]) || [];
+    const anchor = ((await this.state.storage.get("anchor")) as number) || Date.now();
+    return { type: "sync", rotation, anchor, serverNow: Date.now(), listeners: this.state.getWebSockets().length };
   }
 
-  async alarm() {
-    this.advance();
-  }
-
-  private advance() {
-    const next = this.queue.shift();
-    if (!next) return;
-    this.queue.push(next); // simple round-robin
-    // durationSec should come from the track record; placeholder here.
-    this.current = { trackId: next, startedAt: Date.now(), durationSec: 180 };
-    this.state.storage.setAlarm(Date.now() + this.current.durationSec * 1000);
-    this.broadcast({ type: "track_change", ...this.withOffset() });
-  }
-
-  private withOffset() {
-    if (!this.current) return null;
-    const offsetSec = (Date.now() - this.current.startedAt) / 1000;
-    return { ...this.current, offsetSec };
-  }
-
-  private sendState(ws: WebSocket) {
-    if (this.current) ws.send(JSON.stringify({ type: "track_change", ...this.withOffset() }));
-  }
-
-  private broadcast(obj: unknown) {
-    const msg = JSON.stringify(obj);
+  private broadcast(str: string) {
     for (const ws of this.state.getWebSockets()) {
-      try { ws.send(msg); } catch { /* dropped socket */ }
+      try { ws.send(str); } catch { /* dropped */ }
     }
   }
 
-  private broadcastListenerCount() {
-    this.broadcast({ type: "listener_count", count: this.state.getWebSockets().length });
+  private broadcastListeners() {
+    this.broadcast(JSON.stringify({ type: "listeners", count: this.state.getWebSockets().length }));
   }
 }
