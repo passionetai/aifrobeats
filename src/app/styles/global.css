@@ -26,3 +26,20 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing:
 }
 
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+
+/* Nav responsiveness: hamburger under 760px, full row above. */
+.nav-burger { display: none; }
+@media (max-width: 760px) {
+  .nav-desktop { display: none !important; }
+  .nav-burger { display: block !important; }
+}
+
+/* Never let anything spill sideways on small screens. */
+html, body { overflow-x: hidden; }
+img, video { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  .container { padding: 0 16px; }
+  .stack-sm { flex-direction: column !important; align-items: stretch !important; }
+  .stack-sm > button { width: 100%; }
+}

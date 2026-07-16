@@ -54,7 +54,7 @@ export default function RequestBooth() {
         <div style={styles.form}>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Short title, e.g. Rainy season amapiano" style={styles.input} maxLength={80} />
           <textarea value={brief} onChange={(e) => setBrief(e.target.value)} placeholder="Describe the vibe, mood, story you want" style={{ ...styles.input, minHeight: 80, resize: "vertical" }} maxLength={500} />
-          <div style={{ display: "flex", gap: 10 }}>
+          <div className="stack-sm" style={{ display: "flex", gap: 10 }}>
             <input value={mood} onChange={(e) => setMood(e.target.value)} placeholder="Mood (optional)" style={{ ...styles.input, flex: 1 }} />
             <button onClick={submit} style={styles.postBtn}>Post request</button>
           </div>

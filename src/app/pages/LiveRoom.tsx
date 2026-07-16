@@ -173,7 +173,7 @@ export default function LiveRoom() {
           ))}
         </div>
         {user ? (
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="stack-sm" style={{ display: "flex", gap: 8 }}>
             <input value={msg} onChange={(e) => setMsg(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} placeholder="Message the room" maxLength={300} style={styles.chatInput} />
             <button onClick={send} style={styles.sendBtn}>Send</button>
           </div>

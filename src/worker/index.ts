@@ -11,6 +11,7 @@ import playlists from "./routes/playlists";
 import users from "./routes/users";
 import admin from "./routes/admin";
 import { recomputeChart } from "./jobs/recompute-chart";
+import { trackMetaResponse } from "./lib/og";
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -47,6 +48,10 @@ app.route("/api/admin", admin);
 // Anything that is not /api/* is served by the static assets (the built
 // React app). not_found_handling = "single-page-application" handles deep links.
 app.all("/api/*", (c) => c.json({ ok: false, error: "not_found" }, 404));
+
+// Share cards: track pages get track-specific preview tags injected.
+app.get("/track/:id", trackMetaResponse);
+
 app.get("*", (c) => c.env.ASSETS.fetch(c.req.raw));
 
 export default {

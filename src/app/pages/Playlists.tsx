@@ -28,7 +28,7 @@ export default function Playlists() {
       <h1 style={{ fontSize: 44, margin: "8px 0 26px" }}>Playlists</h1>
 
       {user ? (
-        <div style={s.form}>
+        <div className="stack-sm" style={s.form}>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="New playlist title" style={s.input} maxLength={80} />
           <input value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Description (optional)" style={s.input} maxLength={300} />
           <button onClick={make} style={s.btn}>Create</button>

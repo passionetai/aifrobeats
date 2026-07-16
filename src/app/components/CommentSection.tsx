@@ -42,7 +42,7 @@ export default function CommentSection({ trackId }: { trackId: string }) {
       <h2 style={{ fontSize: 22, margin: "0 0 16px" }}>Discussion</h2>
 
       {user ? (
-        <div style={{ display: "flex", gap: 10, marginBottom: 22 }}>
+        <div className="stack-sm" style={{ display: "flex", gap: 10, marginBottom: 22 }}>
           <input
             value={body}
             onChange={(e) => setBody(e.target.value)}
