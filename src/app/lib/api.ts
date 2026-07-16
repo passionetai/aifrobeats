@@ -181,3 +181,70 @@ export async function fulfilRequest(id: string, trackId: string): Promise<{ ok: 
   const data = (await res.json()) as { ok?: boolean; error?: string };
   return { ok: !!data.ok, error: data.error };
 }
+
+// ---- Playlists ----
+export interface PlaylistSummary {
+  id: string; title: string; description?: string | null;
+  handle?: string; display_name?: string; track_count: number; is_public?: number;
+}
+export interface PlaylistTrack { id: string; title: string; artist: string; mood: string | null; score: number; }
+
+export async function discoverPlaylists(): Promise<PlaylistSummary[]> {
+  const res = await fetch("/api/playlists");
+  const data = (await res.json()) as { playlists: PlaylistSummary[] };
+  return data.playlists ?? [];
+}
+export async function myPlaylists(): Promise<PlaylistSummary[]> {
+  const res = await fetch("/api/playlists/mine", { credentials: "same-origin" });
+  const data = (await res.json()) as { playlists: PlaylistSummary[] };
+  return data.playlists ?? [];
+}
+export async function createPlaylist(title: string, description: string, is_public: boolean): Promise<{ ok: boolean; id?: string; error?: string }> {
+  const res = await fetch("/api/playlists", {
+    method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin",
+    body: JSON.stringify({ title, description, is_public }),
+  });
+  const data = (await res.json()) as { ok?: boolean; id?: string; error?: string };
+  return { ok: !!data.ok, id: data.id, error: data.error };
+}
+export async function getPlaylist(id: string): Promise<{ playlist: any; tracks: PlaylistTrack[]; is_owner: boolean } | null> {
+  const res = await fetch(`/api/playlists/${id}`, { credentials: "same-origin" });
+  if (!res.ok) return null;
+  return (await res.json()) as { playlist: any; tracks: PlaylistTrack[]; is_owner: boolean };
+}
+export async function addToPlaylist(playlistId: string, trackId: string): Promise<boolean> {
+  const res = await fetch(`/api/playlists/${playlistId}/tracks`, {
+    method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin",
+    body: JSON.stringify({ track_id: trackId }),
+  });
+  return res.ok;
+}
+export async function removeFromPlaylist(playlistId: string, trackId: string): Promise<boolean> {
+  const res = await fetch(`/api/playlists/${playlistId}/tracks/${trackId}`, { method: "DELETE", credentials: "same-origin" });
+  return res.ok;
+}
+export async function deletePlaylist(id: string): Promise<boolean> {
+  const res = await fetch(`/api/playlists/${id}`, { method: "DELETE", credentials: "same-origin" });
+  return res.ok;
+}
+
+// ---- Profiles / follow / curators ----
+export interface Profile {
+  handle: string; display_name: string; bio: string | null; points: number;
+  badge: string; created_at: string; followers: number; following: number;
+}
+export async function getProfile(handle: string): Promise<{ profile: Profile; playlists: PlaylistSummary[]; is_following: boolean; is_me: boolean } | null> {
+  const res = await fetch(`/api/users/${handle}`, { credentials: "same-origin" });
+  if (!res.ok) return null;
+  return (await res.json()) as any;
+}
+export async function toggleFollow(handle: string, on: boolean): Promise<boolean> {
+  const res = await fetch(`/api/users/${handle}/follow`, { method: on ? "POST" : "DELETE", credentials: "same-origin" });
+  return res.ok;
+}
+export interface Curator { handle: string; display_name: string; points: number; followers: number; playlists: number; badge: string; }
+export async function getCurators(): Promise<Curator[]> {
+  const res = await fetch("/api/users/curators");
+  const data = (await res.json()) as { curators: Curator[] };
+  return data.curators ?? [];
+}

@@ -3,6 +3,7 @@ import type { Env } from "../env";
 import { newId } from "../lib/id";
 import { extensionOf } from "../lib/r2";
 import { currentUser } from "../auth/session";
+import { award } from "../lib/points";
 
 const admin = new Hono<{ Bindings: Env }>();
 
@@ -98,6 +99,15 @@ admin.post("/requests/:id/fulfil", async (c) => {
     .bind(req.user_id, id, track_id).run();
   await c.env.DB.prepare("UPDATE requests SET status = 'fulfilled', fulfilled_track_id = ? WHERE id = ?")
     .bind(track_id, id).run();
+
+  // Points: reward the fan who requested it, and everyone who backed it.
+  await award(c.env, req.user_id, "request_fulfilled", 50, id);
+  const { results: backers } = await c.env.DB.prepare(
+    "SELECT user_id FROM request_votes WHERE request_id = ?"
+  ).bind(id).all<{ user_id: string }>();
+  for (const b of backers ?? []) {
+    if (b.user_id !== req.user_id) await award(c.env, b.user_id, "backed_winner", 2, id);
+  }
 
   return c.json({ ok: true });
 });

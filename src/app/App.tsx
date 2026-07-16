@@ -12,6 +12,10 @@ import Login from "./pages/Login";
 import Onboard from "./pages/Onboard";
 import RequestBooth from "./pages/RequestBooth";
 import LiveRoom from "./pages/LiveRoom";
+import Playlists from "./pages/Playlists";
+import PlaylistDetail from "./pages/PlaylistDetail";
+import Profile from "./pages/Profile";
+import Curators from "./pages/Curators";
 
 function Soon({ title, phase }: { title: string; phase: string }) {
   return (
@@ -38,8 +42,10 @@ export default function App() {
               <Route path="/onboard" element={<Onboard />} />
               <Route path="/booth" element={<RequestBooth />} />
               <Route path="/live" element={<LiveRoom />} />
-              <Route path="/curators" element={<Soon title="Curators" phase="Phase 4" />} />
-              <Route path="/u/:handle" element={<Soon title="Profiles" phase="Phase 4" />} />
+              <Route path="/playlists" element={<Playlists />} />
+              <Route path="/playlists/:id" element={<PlaylistDetail />} />
+              <Route path="/curators" element={<Curators />} />
+              <Route path="/u/:handle" element={<Profile />} />
               <Route path="*" element={<Soon title="Not found" phase="a later phase" />} />
             </Routes>
             <Player />

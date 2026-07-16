@@ -6,6 +6,7 @@ const links = [
   { to: "/chart", label: "Hot 100" },
   { to: "/booth", label: "Request Booth" },
   { to: "/live", label: "Live" },
+  { to: "/playlists", label: "Playlists" },
   { to: "/curators", label: "Curators" },
 ];
 

@@ -7,6 +7,8 @@ import chart from "./routes/chart";
 import comments from "./routes/comments";
 import requests from "./routes/requests";
 import radio from "./routes/radio";
+import playlists from "./routes/playlists";
+import users from "./routes/users";
 import admin from "./routes/admin";
 import { recomputeChart } from "./jobs/recompute-chart";
 
@@ -37,6 +39,8 @@ app.route("/api/chart", chart);
 app.route("/api", comments);     // /api/tracks/:id/comments, /api/comments/:id, /api/tracks/:id/reactions
 app.route("/api/requests", requests);
 app.route("/api/radio", radio);
+app.route("/api/playlists", playlists);
+app.route("/api/users", users);
 app.route("/api/admin", admin);
 
 // --- SPA ---------------------------------------------------------------
