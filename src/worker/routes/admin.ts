@@ -82,4 +82,24 @@ admin.delete("/tracks/:id", async (c) => {
   return c.json({ ok: true });
 });
 
+// POST /api/admin/requests/:id/fulfil { track_id }  -> link track, credit requester
+admin.post("/requests/:id/fulfil", async (c) => {
+  const id = c.req.param("id");
+  const { track_id } = await c.req.json<{ track_id?: string }>().catch(() => ({ track_id: "" }));
+  if (!track_id) return c.json({ error: "track_id required" }, 400);
+
+  const req = await c.env.DB.prepare("SELECT user_id, status FROM requests WHERE id = ?").bind(id).first<{ user_id: string; status: string }>();
+  if (!req) return c.json({ error: "request not_found" }, 404);
+  const track = await c.env.DB.prepare("SELECT id FROM tracks WHERE id = ?").bind(track_id).first();
+  if (!track) return c.json({ error: "track not_found" }, 404);
+
+  // Credit the requester on the track and link both ways.
+  await c.env.DB.prepare("UPDATE tracks SET credited_user = ?, request_id = ? WHERE id = ?")
+    .bind(req.user_id, id, track_id).run();
+  await c.env.DB.prepare("UPDATE requests SET status = 'fulfilled', fulfilled_track_id = ? WHERE id = ?")
+    .bind(track_id, id).run();
+
+  return c.json({ ok: true });
+});
+
 export default admin;

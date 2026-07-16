@@ -5,6 +5,7 @@ import tracks from "./routes/tracks";
 import votes from "./routes/votes";
 import chart from "./routes/chart";
 import comments from "./routes/comments";
+import requests from "./routes/requests";
 import admin from "./routes/admin";
 import { recomputeChart } from "./jobs/recompute-chart";
 
@@ -33,10 +34,8 @@ app.route("/api/tracks", tracks);
 app.route("/api", votes);        // /api/tracks/:id/vote, /api/me/votes
 app.route("/api/chart", chart);
 app.route("/api", comments);     // /api/tracks/:id/comments, /api/comments/:id, /api/tracks/:id/reactions
+app.route("/api/requests", requests);
 app.route("/api/admin", admin);
-
-// Mounts in later sittings:
-//   app.route("/api/requests", requests); // Phase 2
 
 // --- SPA ---------------------------------------------------------------
 // Anything that is not /api/* is served by the static assets (the built

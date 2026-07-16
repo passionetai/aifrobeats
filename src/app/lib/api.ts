@@ -119,3 +119,65 @@ export async function toggleReaction(trackId: string, emoji: string): Promise<{ 
   const data = (await res.json()) as { ok?: boolean; on?: boolean; error?: string };
   return { ok: !!data.ok, on: data.on, error: data.error };
 }
+
+export interface RequestItem {
+  id: string;
+  title: string;
+  brief: string;
+  mood: string | null;
+  vote_count: number;
+  status: string;
+  created_at: string;
+  handle: string;
+  display_name: string;
+  fulfilled_track_id?: string | null;
+}
+
+export async function listRequests(status = "open"): Promise<{ requests: RequestItem[]; threshold: number; voted: string[] }> {
+  const res = await fetch(`/api/requests?status=${status}`, { credentials: "same-origin" });
+  const data = (await res.json()) as { requests: RequestItem[]; threshold: number; voted: string[] };
+  return { requests: data.requests ?? [], threshold: data.threshold ?? 25, voted: data.voted ?? [] };
+}
+
+export async function listWinners(): Promise<{ winners: RequestItem[]; threshold: number }> {
+  const res = await fetch(`/api/requests/winners`);
+  const data = (await res.json()) as { winners: RequestItem[]; threshold: number };
+  return { winners: data.winners ?? [], threshold: data.threshold ?? 25 };
+}
+
+export async function submitRequest(title: string, brief: string, mood: string): Promise<{ ok: boolean; error?: string }> {
+  const res = await fetch(`/api/requests`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ title, brief, mood }),
+  });
+  const data = (await res.json()) as { ok?: boolean; error?: string };
+  return { ok: !!data.ok, error: data.error };
+}
+
+export async function voteRequest(id: string, on: boolean): Promise<{ ok: boolean; vote_count?: number; status?: string; error?: string }> {
+  const res = await fetch(`/api/requests/${id}/vote`, {
+    method: on ? "POST" : "DELETE",
+    credentials: "same-origin",
+  });
+  const data = (await res.json()) as { ok?: boolean; vote_count?: number; status?: string; error?: string };
+  return { ok: !!data.ok, vote_count: data.vote_count, status: data.status, error: data.error };
+}
+
+export async function deleteRequest(id: string): Promise<boolean> {
+  const res = await fetch(`/api/requests/${id}`, { method: "DELETE", credentials: "same-origin" });
+  const data = (await res.json()) as { ok?: boolean };
+  return !!data.ok;
+}
+
+export async function fulfilRequest(id: string, trackId: string): Promise<{ ok: boolean; error?: string }> {
+  const res = await fetch(`/api/admin/requests/${id}/fulfil`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ track_id: trackId }),
+  });
+  const data = (await res.json()) as { ok?: boolean; error?: string };
+  return { ok: !!data.ok, error: data.error };
+}
