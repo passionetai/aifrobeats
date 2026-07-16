@@ -1,0 +1,4 @@
+# Copy to .dev.vars for local dev (gitignored). Set real values.
+SESSION_SIGNING_KEY="dev-only-change-me"
+TURNSTILE_SECRET=""
+EMAIL_API_KEY=""

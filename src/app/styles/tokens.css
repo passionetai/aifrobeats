@@ -1,0 +1,26 @@
+:root {
+  /* color */
+  --bg:          #0B0B14; /* midnight background */
+  --bg-elev:     #14141F; /* raised surfaces */
+  --bg-elev-2:   #1C1C2B;
+  --sunset:      #FF6A2B; /* primary accent */
+  --sunset-deep: #E1531B;
+  --gold:        #F2B705; /* reserved: rank #1, top curator */
+  --text:        #F5F3EF; /* off-white */
+  --text-dim:    #A6A2B0;
+  --line:        #26263A;
+  --up:          #35D07F;
+  --down:        #FF5C7A;
+
+  /* type */
+  --font-display: "Archivo Black", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+
+  /* shape */
+  --radius:    14px;
+  --radius-lg: 22px;
+  --shadow:    0 8px 30px rgba(0, 0, 0, 0.45);
+
+  /* rhythm */
+  --maxw: 1080px;
+}

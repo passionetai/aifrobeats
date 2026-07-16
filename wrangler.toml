@@ -1,0 +1,58 @@
+name = "aifrobeats"
+main = "src/worker/index.ts"
+compatibility_date = "2026-07-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Serve the built React SPA as static assets from the same Worker.
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+# --- D1: paste database_id from `wrangler d1 create aifrobeats-db` ---
+[[d1_databases]]
+binding = "DB"
+database_name = "aifrobeats-db"
+database_id = "b408ac8e-46ad-4f6f-9ae6-f2fc1f2696cb"
+migrations_dir = "migrations"
+
+# --- R2 media bucket (audio + cover art) ---
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "aifrobeats-media"
+
+# --- KV: paste id from `wrangler kv namespace create CACHE` ---
+[[kv_namespaces]]
+binding = "CACHE"
+id = "20ab6150fbd24ccc8d03cc1a425087f6"
+
+[vars]
+APP_URL = "https://aifrobeats.com"
+# Secrets (set with `wrangler secret put NAME`, do NOT put here):
+#   SESSION_SIGNING_KEY, TURNSTILE_SECRET, EMAIL_API_KEY
+
+# Hourly chart + leaderboard recompute (Phase 1 fills in the job).
+[triggers]
+crons = ["0 * * * *"]
+
+# =====================================================================
+# ENABLE IN LATER PHASES. Uncomment when you reach them so the very
+# first Phase 0 deploy has the fewest moving parts.
+#
+# Phase 2/4 background notifications:
+# [[queues.producers]]
+# binding = "NOTIFY_QUEUE"
+# queue = "aifrobeats-notify"
+# [[queues.consumers]]
+# queue = "aifrobeats-notify"
+# max_batch_size = 10
+#
+# Phase 3 synced radio (SQLite-backed DO is the ONLY free-plan option,
+# so it MUST be declared with new_sqlite_classes, never new_classes):
+# [durable_objects]
+# bindings = [ { name = "RADIO", class_name = "RadioRoom" } ]
+# [[migrations]]
+# tag = "v1"
+# new_sqlite_classes = ["RadioRoom"]
+# =====================================================================
