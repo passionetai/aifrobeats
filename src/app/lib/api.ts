@@ -248,3 +248,13 @@ export async function getCurators(): Promise<Curator[]> {
   const data = (await res.json()) as { curators: Curator[] };
   return data.curators ?? [];
 }
+
+export async function subscribeEmail(email: string): Promise<{ ok: boolean; error?: string }> {
+  const res = await fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  const data = (await res.json()) as { ok?: boolean; error?: string };
+  return { ok: !!data.ok, error: data.error };
+}

@@ -16,6 +16,11 @@ import Playlists from "./pages/Playlists";
 import PlaylistDetail from "./pages/PlaylistDetail";
 import Profile from "./pages/Profile";
 import Curators from "./pages/Curators";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Footer from "./components/Footer";
 
 function Soon({ title, phase }: { title: string; phase: string }) {
   return (
@@ -46,8 +51,13 @@ export default function App() {
               <Route path="/playlists/:id" element={<PlaylistDetail />} />
               <Route path="/curators" element={<Curators />} />
               <Route path="/u/:handle" element={<Profile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route path="*" element={<Soon title="Not found" phase="a later phase" />} />
             </Routes>
+            <Footer />
             <Player />
           </PlayerProvider>
         </VotesProvider>

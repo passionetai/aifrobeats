@@ -9,6 +9,7 @@ import requests from "./routes/requests";
 import radio from "./routes/radio";
 import playlists from "./routes/playlists";
 import users from "./routes/users";
+import subscribe from "./routes/subscribe";
 import admin from "./routes/admin";
 import { recomputeChart } from "./jobs/recompute-chart";
 import { trackMetaResponse } from "./lib/og";
@@ -42,6 +43,7 @@ app.route("/api/requests", requests);
 app.route("/api/radio", radio);
 app.route("/api/playlists", playlists);
 app.route("/api/users", users);
+app.route("/api/subscribe", subscribe);
 app.route("/api/admin", admin);
 
 // --- SPA ---------------------------------------------------------------

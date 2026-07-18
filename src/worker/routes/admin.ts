@@ -133,4 +133,13 @@ admin.post("/radio/rotation", async (c) => {
   return c.json({ ok: true, count: rotation.length });
 });
 
+// GET /api/admin/subscribers  -> count + recent emails (owner only)
+admin.get("/subscribers", async (c) => {
+  const count = await c.env.DB.prepare("SELECT COUNT(*) AS n FROM subscribers").first<{ n: number }>();
+  const { results } = await c.env.DB.prepare(
+    "SELECT email, created_at FROM subscribers ORDER BY created_at DESC LIMIT 500"
+  ).all<{ email: string; created_at: string }>();
+  return c.json({ count: count?.n ?? 0, subscribers: results ?? [] });
+});
+
 export default admin;
