@@ -142,4 +142,22 @@ admin.get("/subscribers", async (c) => {
   return c.json({ count: count?.n ?? 0, subscribers: results ?? [] });
 });
 
+// POST /api/admin/broadcast { subject, body }  -> email all subscribers
+admin.post("/broadcast", async (c) => {
+  type Body = { subject?: string; body?: string };
+  const { subject, body } = await c.req.json<Body>().catch(() => ({} as Body));
+  const subj = (subject || "").trim().slice(0, 150);
+  const text = (body || "").trim().slice(0, 5000);
+  if (!subj || !text) return c.json({ error: "Subject and body required." }, 400);
+
+  const { results } = await c.env.DB.prepare("SELECT email FROM subscribers").all<{ email: string }>();
+  const emails = (results ?? []).map((r) => r.email);
+  if (emails.length === 0) return c.json({ ok: true, sent: 0, failed: 0, total: 0 });
+
+  const origin = new URL(c.req.url).origin;
+  const { sendBroadcast } = await import("../lib/broadcast");
+  const r = await sendBroadcast(c.env, origin, subj, text, emails);
+  return c.json({ ok: true, ...r, total: emails.length });
+});
+
 export default admin;

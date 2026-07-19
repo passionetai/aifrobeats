@@ -258,3 +258,20 @@ export async function subscribeEmail(email: string): Promise<{ ok: boolean; erro
   const data = (await res.json()) as { ok?: boolean; error?: string };
   return { ok: !!data.ok, error: data.error };
 }
+
+export async function getSubscribers(): Promise<{ count: number; subscribers: { email: string; created_at: string }[] }> {
+  const res = await fetch("/api/admin/subscribers", { credentials: "same-origin" });
+  if (!res.ok) return { count: 0, subscribers: [] };
+  return (await res.json()) as { count: number; subscribers: { email: string; created_at: string }[] };
+}
+
+export async function sendBroadcast(subject: string, body: string): Promise<{ ok: boolean; sent?: number; failed?: number; total?: number; error?: string }> {
+  const res = await fetch("/api/admin/broadcast", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({ subject, body }),
+  });
+  const data = (await res.json()) as { ok?: boolean; sent?: number; failed?: number; total?: number; error?: string };
+  return { ok: !!data.ok, sent: data.sent, failed: data.failed, total: data.total, error: data.error };
+}

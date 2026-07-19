@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { getSubscribers, sendBroadcast } from "../lib/api";
 
 export default function Admin() {
   const { user, loading } = useAuth();
@@ -97,7 +98,52 @@ export default function Admin() {
         {busy ? "Uploading..." : "Upload drop"}
       </button>
       {msg && <p style={{ marginTop: 16, color: msg.ok ? "var(--up)" : "var(--down)" }}>{msg.text}</p>}
+
+      <BroadcastPanel />
     </main>
+  );
+}
+
+function BroadcastPanel() {
+  const [count, setCount] = useState<number | null>(null);
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+
+  async function loadCount() {
+    const s = await getSubscribers();
+    setCount(s.count);
+  }
+  useEffect(() => { loadCount(); }, []);
+
+  async function blast() {
+    if (!subject.trim() || !body.trim()) { setResult("Subject and message are required."); return; }
+    if (!confirm(`Send this email to all ${count ?? ""} subscribers?`)) return;
+    setBusy(true); setResult(null);
+    const r = await sendBroadcast(subject.trim(), body.trim());
+    setBusy(false);
+    if (r.ok) { setResult(`Sent to ${r.sent} of ${r.total} subscribers.${r.failed ? ` ${r.failed} failed.` : ""}`); setSubject(""); setBody(""); }
+    else setResult(r.error || "Failed to send.");
+  }
+
+  return (
+    <section style={{ marginTop: 48, borderTop: "1px solid var(--line)", paddingTop: 32 }}>
+      <h2 style={{ fontSize: 26, margin: "0 0 6px" }}>Email blast</h2>
+      <p style={{ color: "var(--text-dim)", marginTop: 0 }}>
+        Send an announcement to your drop-alert subscribers{count !== null ? ` (${count} on the list)` : ""}.
+      </p>
+      <label style={styles.label}>Subject
+        <input value={subject} onChange={(e) => setSubject(e.target.value)} style={styles.input} maxLength={150} placeholder="New drop just landed" />
+      </label>
+      <label style={styles.label}>Message
+        <textarea value={body} onChange={(e) => setBody(e.target.value)} style={{ ...styles.input, minHeight: 140, resize: "vertical", fontFamily: "inherit" }} maxLength={5000} placeholder="Write your announcement. Blank lines start new paragraphs." />
+      </label>
+      <button onClick={blast} disabled={busy} style={{ ...styles.submit, border: "none", cursor: "pointer", opacity: busy ? 0.6 : 1 }}>
+        {busy ? "Sending..." : "Send to subscribers"}
+      </button>
+      {result && <p style={{ marginTop: 14, color: "var(--up)" }}>{result}</p>}
+    </section>
   );
 }
 
